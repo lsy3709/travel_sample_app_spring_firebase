@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="150dp"
+    tools:context=".InputActivity">
+
+    <LinearLayout
+        android:id="@+id/tripCreateMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="75dp"
+                android:layout_margin="15dp">
+
+                <ImageView
+                    android:id="@+id/tripPersonalImg"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/person"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/tripPersonalBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#619CD6"
+                android:text="PERSONAL" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="75dp"
+                android:layout_margin="15dp">
+                <ImageView
+                    android:id="@+id/tripTeamImg"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/people"/>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/tripTeamBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#619CD6"
+                android:text="TEAM" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

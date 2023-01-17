@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="35dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:id="@+id/registerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#619CD6"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="PLAN TALK" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="85dp"
+        android:gravity="center"
+        android:textColor="#B4B4B4"
+        android:textSize="16sp"
+        android:text="형식에 맞게 내용을 입력해주세요"/>
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:padding="15dp"
+        android:textSize="20sp"
+        android:inputType="textPersonName"
+        android:hint="아이디를 입력해주세요"/>
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:padding="15dp"
+        android:textSize="20sp"
+        android:hint="쉬운 비밀번호는 해킹당하기 쉽습니다"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:padding="15dp"
+        android:textSize="20sp"
+        android:hint="이름을 입력해주세요"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#619CD6"
+        android:textSize="20sp"
+        android:text="Sign up" />
+
+    <TextView
+        android:id="@+id/tvBackLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="Back to Login " />
+</LinearLayout>
