@@ -24,5 +24,7 @@ class InputActivity : AppCompatActivity() {
             intent.putExtra("check",1)
             startActivity(intent)
         }
+
+
     }
 }

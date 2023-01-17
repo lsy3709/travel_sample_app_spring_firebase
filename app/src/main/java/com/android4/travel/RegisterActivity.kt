@@ -44,5 +44,12 @@ class RegisterActivity : AppCompatActivity() {
 
             })
         }
+        // 앱 시작시 회원가입 창에서 back to Login  버튼 클릭시 해당 로그인 뷰로 이동
+        binding.tvBackLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+
+            startActivity(intent)
+        }
+
     }
 }
