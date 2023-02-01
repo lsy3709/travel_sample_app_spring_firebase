@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //SharedPreference를 이용하여 간단한 데이터들을 저장하고 불러올 수 있다.
         val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
         var check = pref.getInt("input", 0)
 

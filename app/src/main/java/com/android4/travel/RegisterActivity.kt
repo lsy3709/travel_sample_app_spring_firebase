@@ -22,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerBtn.setOnClickListener {
 
             var user = User(binding.editUsername.text.toString(), binding.editPassword.text.toString(), binding.editNickname.text.toString())
-            Log.d("test1", "===================================$user")
+            Log.d("test1", "=========================registerBtn==========$user")
             val networkService = (applicationContext as MyApplication).networkService
             var userInsertCall = networkService.doInsertUser(user)
             userInsertCall.enqueue(object: Callback<User> {
@@ -30,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
                     if(response.isSuccessful) {
                         var user = response.body()
 
-                        Log.d("test1", "===================================$user")
+                        Log.d("test1", "===response.isSuccessful=====response.body()===========================$user")
 
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
 
