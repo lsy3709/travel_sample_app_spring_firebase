@@ -22,6 +22,7 @@ import java.util.HashMap
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
     private val fireDatabase = FirebaseDatabase.getInstance().reference
+    private  var TAG : String = "LoginActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,21 +36,25 @@ class LoginActivity : AppCompatActivity() {
                 password = binding.loginPassEt.text.toString()
                 )
 
+            //retrofit2 통신 스프링에 전달 부분
             val networkService = (applicationContext as MyApplication).networkService
+            // 스프링에서 받아 온 유저
             var userInsertCall = networkService.login(loginDto)
-            Log.d("pjh", loginDto.toString())
+            Log.d(TAG, "1===========loginDto.toString()의 값 : $loginDto")
             userInsertCall.enqueue(object: Callback<LoginDto> {
                 override fun onResponse(call: Call<LoginDto>, response: Response<LoginDto>) {
-                    Log.d("pjh", response.toString())
+
                     if(response.isSuccessful) {
+                        Log.d(TAG, "2===========response.toString()의 값 : $response")
                         val header = response.headers()
                         val auth = header.get("Authorization")
-                        Log.d("pjh",auth.toString())
+                        Log.d(TAG,"3===========auth.toString()의 값 "+auth.toString())
 
                         val username = response.body()?.username.toString()
                         val password = response.body()?.password.toString()
 
-                        Log.d("pjh","login=======$username")
+                        Log.d(TAG,"4============login=username======$username")
+
                         val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
                         loginSharedPref.edit().run {
                             putString("Authorization", auth)
@@ -68,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 val user = response.body()
 
-                                Log.d("test", "loginUser======================$user")
+                                Log.d(TAG, "5=============loginUser======================$user")
 
                                 fireDatabase.child("users").child(username.toString()).addListenerForSingleValueEvent(object :
                                     ValueEventListener {
@@ -78,8 +83,8 @@ class LoginActivity : AppCompatActivity() {
                                         var check=0
                                         var inUsername:String
                                         for(data in snapshot.children){
-                                            Log.d("sy", "data.....$data")
-                                            Log.d("sy", "key...........${data.children}")
+                                            Log.d(TAG, "6============data.....$data")
+                                            Log.d(TAG, "7===============key...........${data.children}")
 
                                             var item = data.getValue() as HashMap<String, Any?>
                                             inUsername = item.get("username").toString()
@@ -127,6 +132,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         })
 
+                        //로그인 후 메인 화면으로
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
 
                         startActivity(intent)
@@ -140,6 +146,7 @@ class LoginActivity : AppCompatActivity() {
             })
         }
 
+        //회원가입 창에서 클릭시 로그인창으로 이동
         binding.loginSignUpBtn.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
 

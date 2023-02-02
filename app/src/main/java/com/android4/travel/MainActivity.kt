@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var username: String
     lateinit var nickname: String
+    private  var TAG : String = "MainActivity"
 
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +61,11 @@ class MainActivity : AppCompatActivity() {
 
         myRef.get().addOnCompleteListener {
             username = it.result.value.toString()
-            Log.d("test","main==================================$$username")
+            Log.d(TAG,"1=====main==================================$$username")
 
+            //레트로핏 통신 객체
             val networkService = (applicationContext as MyApplication).networkService
+            //
             var oneUserCall = networkService.doGetOneUser(username)
             oneUserCall.enqueue(object: Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
