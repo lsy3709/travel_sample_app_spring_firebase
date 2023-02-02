@@ -25,12 +25,12 @@
     android:layout_height="match_parent">
 
 <!--viewPager로 변경-->
-<androidx.viewpager2.widget.ViewPager2
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_marginBottom="45dp"
-    android:id="@+id/viewPager"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp"
+        android:orientation="horizontal" />
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/recyclerView"-->
@@ -42,10 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        app:tabTextColor="#619CD6"
+        app:tabBackground="@drawable/tab_selector"
         app:tabIndicatorColor="#619CD6"
         app:tabSelectedTextColor="#ffffff"
-        app:tabBackground="@drawable/tab_selector">
+        app:tabTextColor="#619CD6">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

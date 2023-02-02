@@ -88,36 +88,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//tabLayout binding
-//        binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                val transaction = supportFragmentManager.beginTransaction()
-//                when(tab?.text){
-//                    "여행" -> {
-//                        transaction.replace(R.id.linearTest, TripFragment())
-//                    }
-//                    "일정" -> {
-//                        transaction.replace(R.id.linearTest, ListFragment())
-//                    }
-//                    "일기" -> {
-//                        transaction.replace(R.id.linearTest, DiaryFragment())
-//                    }
-//                }
-//                transaction.addToBackStack(null)
-//                transaction.commit()
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//
-//            }
-//        })
-//tabLayoutManager
-//        mViewPager = findViewById(R.id.viewPager)
-//        mViewPager!!.adapter = MainViewPagerAdapter(this)
+
         binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 //탭 선택되었을 때,
@@ -170,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
         var check = pref.getInt("input", 0)
 
-        Log.d("pjh", "$check==============")
+        Log.d(TAG, "$check==============")
 
         if (check == 1) {
             pref.edit().run {
@@ -217,17 +188,5 @@ class MainViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fr
         }
     }
 }
-//class MainViewPagerAdapter(val trip: TripFragment, val list: ListFragment, val diary: DiaryFragment): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-//            RecyclerView.ViewHolder = MainViewPagerHolder(ItemViewPagerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-//
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        val binding = (holder as MainViewPagerHolder).binding
-//        binding
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return datas.size
-//    }
-//}
+
 
