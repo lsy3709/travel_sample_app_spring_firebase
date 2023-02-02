@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class InputTripActivity : AppCompatActivity() {
+    private var TAG: String = "InputTripActivity"
     lateinit var binding: ActivityInputTripBinding
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     lateinit var intentLauncher: ActivityResultLauncher<Intent>
@@ -64,14 +65,14 @@ class InputTripActivity : AppCompatActivity() {
         myRef.get().addOnCompleteListener {
             username = it.result.value.toString()
 
-            Log.d("pjh","main==================================$$username")
+            Log.d(TAG,"1 InputTripActivity 파이어베이스에서 가져온 username : $username")
 
             val networkService = (applicationContext as MyApplication).networkService
             var oneUserCall = networkService.doGetOneUser(username)
             oneUserCall.enqueue(object: Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     nickname = response.body()?.nickname.toString()
-                    Log.d("pjh", "===================nickname: $nickname")
+                    Log.d(TAG, "2  response.body()?.nickname.toString() 스프링에서 가져온 이름: $nickname")
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
@@ -80,10 +81,10 @@ class InputTripActivity : AppCompatActivity() {
 
             })
         }
-        Log.d("pjh","input=======================$nickname")
+        Log.d(TAG,"input=======================$nickname")
 
 
-        Log.d("pjh","input=======================$memberName")
+        Log.d(TAG,"input=======================$memberName")
 
         val intent = intent
 
@@ -179,11 +180,11 @@ class InputTripActivity : AppCompatActivity() {
 
             val networkService = (applicationContext as MyApplication).networkService
             val tripInsertCall = networkService.doInsertTrip(trip)
-            Log.d("pjh","================================${trip}")
+            Log.d(TAG,"================================${trip}")
             tripInsertCall.enqueue(object: Callback<Trip> {
                 override fun onResponse(call: Call<Trip>, response: Response<Trip>) {
                     if(response.isSuccessful) {
-                        Log.d("pjh","================================${response}")
+                        Log.d(TAG,"================================${response}")
                         val intent = Intent(this@InputTripActivity, MainActivity::class.java)
                         val sharePref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
 
@@ -259,17 +260,17 @@ class InputTripActivity : AppCompatActivity() {
                     ), null, null, null)
                 if(cursor!!.moveToNext()) {
                     var name = cursor.getString(0)
-                    Log.d("pjh", "==============$name")
+                    Log.d(TAG, "==============$name")
                     memberName.add(name).let {
                         adapter.notifyDataSetChanged()
                         for(i in 0 until memberName.size) {
-                            Log.d("pjh", "========${memberName[i]}")
+                            Log.d(TAG, "========${memberName[i]}")
                         }
                     }
                     var phone = cursor.getString(1).toInt()
                     memberPhone.add(phone).let {
                         for(i in 0 until memberName.size) {
-                            Log.d("pjh", "========${memberPhone[i]}")
+                            Log.d(TAG, "========${memberPhone[i]}")
                         }
                     }
                 }

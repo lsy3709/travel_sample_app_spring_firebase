@@ -11,7 +11,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
+    //회원 가입시 백 서버에 디비에 저장
+
     lateinit var binding : ActivityRegisterBinding
+    private  var TAG : String = "RegisterActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,15 +26,16 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerBtn.setOnClickListener {
 
             var user = User(binding.editUsername.text.toString(), binding.editPassword.text.toString(), binding.editNickname.text.toString())
-            Log.d("test1", "=========================registerBtn==========$user")
+            Log.d(TAG, "1=========================registerBtn==========$user")
             val networkService = (applicationContext as MyApplication).networkService
+            //스프링에 회원 가입 전달, mysql 저장 후 리턴.
             var userInsertCall = networkService.doInsertUser(user)
             userInsertCall.enqueue(object: Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.isSuccessful) {
                         var user = response.body()
 
-                        Log.d("test1", "===response.isSuccessful=====response.body()===========================$user")
+                        Log.d(TAG, "2===response.isSuccessful=====response.body()===========================$user")
 
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
 

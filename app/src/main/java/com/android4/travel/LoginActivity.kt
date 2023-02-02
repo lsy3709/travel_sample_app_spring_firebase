@@ -20,6 +20,7 @@ import retrofit2.Response
 import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
+    // 로그인 처리가 이루어 지면, 파이어베이스 실시간 데이터베이스 users 아래에 추가되는 로직.
     lateinit var binding : ActivityLoginBinding
     private val fireDatabase = FirebaseDatabase.getInstance().reference
     private  var TAG : String = "LoginActivity"
@@ -64,8 +65,8 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         val database = Firebase.database
+                        //파이어베이스 최상단에 username 이름으로 만들어줌.
                         val myRef = database.getReference("username")
-
                         myRef.setValue(username)
 
                         var oneUserCall = networkService.doGetOneUser(username)
@@ -75,6 +76,8 @@ class LoginActivity : AppCompatActivity() {
 
                                 Log.d(TAG, "5=============loginUser======================$user")
 
+                                // 파이어베이스 실시간 디비에 추가하는 부분
+                                // 로그인유저가 변경이 되면 아래 로직 실행.
                                 fireDatabase.child("users").child(username.toString()).addListenerForSingleValueEvent(object :
                                     ValueEventListener {
                                     override fun onCancelled(error: DatabaseError) {
@@ -88,28 +91,10 @@ class LoginActivity : AppCompatActivity() {
 
                                             var item = data.getValue() as HashMap<String, Any?>
                                             inUsername = item.get("username").toString()
-
+                                            Log.d(TAG, "8===============inUsername...........$inUsername")
                                             if(inUsername == username) {
                                                 check=1
                                             }
-//
-//                                            var arr = arrayListOf<String>()
-//                                            data.children.forEach { user ->
-//                                                var filed = user.value.toString()
-//                                                Log.d("test", "filed==========$filed")
-//                                                for(a in filed.trim('{','}').split(", ")) {
-//                                                    Log.d("test", "a==========$a")
-//                                                    arr.add(a)
-//                                                }
-//
-//                                                inUsername = (arr[2].substring(arr[2].indexOf('=')+1))
-//                                                Log.d("test", "inUsername==========$inUsername")
-//                                                if(inUsername==username) {
-//                                                    check=1
-//                                                }
-//                                            }
-
-//                        fireDatabase.child("users").child(username.toString()).push().setValue(user)
                                         }
                                         if(check==1) {
                                             //username이 이미 저장되어 있음
@@ -117,12 +102,6 @@ class LoginActivity : AppCompatActivity() {
                                             fireDatabase.child("users").child(username.toString()).push().setValue(user)
                                         }
 
-                                        //동일값 계속 생성
-//                    if(fireDatabase.child("users").child(username.toString()) == username){
-//                        return
-//                    }
-//                    fireDatabase.child("users").child(username.toString()).push().setValue(user)
-//
                                     }
                                 })
                             }

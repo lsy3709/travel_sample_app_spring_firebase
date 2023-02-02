@@ -7,6 +7,7 @@ import com.android4.travel.databinding.ActivityInputBinding
 
 class InputActivity : AppCompatActivity() {
     lateinit var binding: ActivityInputBinding
+    private var TAG: String = "InputActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
