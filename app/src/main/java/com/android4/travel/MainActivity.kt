@@ -113,9 +113,12 @@ class MainActivity : AppCompatActivity() {
         }.attach()
 
 //toolbar binding
+        //ActionBar 유틸리티 메서드를 사용하려면 활동의 getSupportActionBar() 메서드를 호출
+        // supportActionBar 인스턴스로 옵션 사용함.
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("PLAN TALK")
+
 
         val networkService = (applicationContext as MyApplication).networkService
         val tripListCall = networkService.doGetTripList()
@@ -155,7 +158,11 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
         }
     }
-
+//툴바 메뉴 아이템 로그아웃 표시 속성 ifRoom : 공간있으면 표기,
+    // never 3점으로 클릭시 표기.
+    // menu/menu.xml 파일에
+    // 로그 아웃 이후 로그인 창으로 가는 샘플 코드 잘 알아두기.
+    //메뉴 클릭시 이 함수가 호출이 됨.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
@@ -170,6 +177,8 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // 샘플 코드 거의 똑같음.
+    // 툴바 옵션 메뉴 예) 로그아웃.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
