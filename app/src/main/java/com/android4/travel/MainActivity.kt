@@ -13,9 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android4.travel.databinding.ActivityMainBinding
-import com.android4.travel.fragment.DiaryCalFragment
-import com.android4.travel.fragment.ListFragment
-import com.android4.travel.fragment.TripFragment
+import com.android4.travel.fragment.*
 import com.android4.travel.model.TripListModel
 import com.android4.travel.model.User
 import com.google.android.material.tabs.TabLayout
@@ -81,14 +79,14 @@ class MainActivity : AppCompatActivity() {
 
             })
         }
-
+//플로팅 액션바 , 개인 , 팀 모임 만들기 가기
         binding.fab.setOnClickListener {
             val intent = Intent(this, InputActivity::class.java)
 
             startActivity(intent)
         }
 
-
+// 탭 옵션
         binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 //탭 선택되었을 때,
@@ -103,12 +101,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 //viewPager - adapter 연결
+        //189번 MainViewPagerAdapter
         binding.viewPager.adapter = MainViewPagerAdapter(this)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "여행"
                 1 -> tab.text = "일정"
                 2 -> tab.text = "일기"
+                3 -> tab.text = "후기"
             }
         }.attach()
 
@@ -137,10 +137,11 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
+// androidx.fragment.app.FragmentActivity
     override fun onStart() {
         super.onStart()
 
+    // onCreate 에도 있음
         val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
         var check = pref.getInt("input", 0)
 
@@ -187,13 +188,14 @@ class MainActivity : AppCompatActivity() {
 
 //viewpager adapter
 class MainViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> TripFragment()
             1 -> ListFragment()
-            else -> DiaryCalFragment()
+            2 -> DiaryCalFragment()
+            else -> DiaryCal2Fragment()
         }
     }
 }

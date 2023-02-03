@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".DiaryFiles.DiaryActivity">
+    tools:context=".DiaryFiles.Diary2Activity">
 
     <LinearLayout
         android:id="@+id/DiaryListOn"
@@ -279,13 +279,13 @@
     <!--    </RelativeLayout>-->
 
 
-  <!--  <LinearLayout
-        android:id="@+id/FragDiaryList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!--  <LinearLayout
+          android:id="@+id/FragDiaryList"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
 
-    </LinearLayout>-->
+      </LinearLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDiaryView"
