@@ -29,34 +29,6 @@
         >
 
     </TextView>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/imageView1"
-        android:src="@drawable/diary01"
-        />
-    <TextView
-        android:id="@+id/calendarData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="설정 날짜"
-        android:fontFamily="@font/bm_font"
-        android:textSize="20sp"
-        android:visibility="visible"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date"
-        android:text="날짜설정"
-        android:fontFamily="@font/bm_font"
-        android:textSize="19sp"
-        android:backgroundTint="#619CD6"
-        >
-
-    </Button>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,7 +56,7 @@
             android:layout_weight="7"
             android:backgroundTint="#619CD6"
             android:text="다음"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:textSize="19sp"
             android:fontFamily="@font/bm_font"/>
     </LinearLayout>

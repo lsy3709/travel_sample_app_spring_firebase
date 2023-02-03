@@ -30,22 +30,6 @@ class DiaryCal2Fragment : Fragment() {
         binding = FragmentDiaryCal2Binding.inflate(inflater, container, false)
 
 
-        binding.date.setOnClickListener {
-            val cal = Calendar.getInstance()
-            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth  ->
-                dateString = "${year}년 ${month+1}월 ${dayOfMonth}일"
-                binding.calendarData.setText("날짜 :" +dateString)
-            }
-
-            activity?.let { it1 ->
-                DatePickerDialog(
-                    it1, dateSetListener, cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
-            binding.btnCal2.visibility=View.VISIBLE
-
-        }
-
         binding.btnCal2.setOnClickListener {
             //호출시 문제 발생
             val intent = Intent(activity, DiaryActivity::class.java)
