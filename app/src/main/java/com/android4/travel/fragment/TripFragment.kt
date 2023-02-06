@@ -26,6 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TripFragment : Fragment() {
+    val TAG : String = "TripFragment";
     lateinit var binding : FragmentTripBinding
     lateinit var adapter: MyTripAdapter
     var username=""
@@ -42,7 +43,7 @@ class TripFragment : Fragment() {
 
         myRef.get().addOnSuccessListener {
             username=it.value.toString()
-            Log.d("test","firebase===========================${it.value.toString()}")
+            Log.d(TAG,"firebase===========================${it.value.toString()}")
             val networkService = (context?.applicationContext as MyApplication).networkService
 
             var oneUserCall = networkService.doGetOneUser(username)
@@ -92,12 +93,12 @@ class TripFragment : Fragment() {
 
                     binding.tripPersonalBtn.setOnClickListener {
                         val intent = Intent(context, InputTripActivity::class.java)
-                        intent.putExtra("check",0)
+                        intent.putExtra(TAG,0)
                         startActivity(intent)
                     }
                     binding.tripTeamBtn.setOnClickListener {
                         val intent = Intent(context, InputTripActivity::class.java)
-                        intent.putExtra("check",1)
+                        intent.putExtra(TAG,1)
                         startActivity(intent)
                     }
                 }
@@ -116,17 +117,18 @@ class TripFragment : Fragment() {
 class MyTripViewHolder(val binding: ItemTripIconBinding): RecyclerView.ViewHolder(binding.root)
 
 class MyTripAdapter(val context: TripFragment,val tripImg:Array<Int>, val trip:List<Trip>?, val nickname:String): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    val TAG : String = "MyTripAdapter"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyTripViewHolder(ItemTripIconBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyTripViewHolder).binding
-        Log.d("test","position===========================$position")
+        Log.d(TAG,"position===========================$position")
         binding.imgTripRecruitTeam.setImageResource(tripImg[(0..2).random()])
         binding.tvTripRecruitTeamTitle.text = trip?.get(position)?.title
         var tripNowMem = trip?.get(position)?.member?.split(",")
-        Log.d("test","tripNowMem===========================$tripNowMem")
+        Log.d(TAG,"tripNowMem===========================$tripNowMem")
         binding.tvTripTeamNowMem.text = tripNowMem?.size?.minus(1).toString()
 
         holder.binding.btnTripEnter.setOnClickListener {
@@ -140,7 +142,7 @@ class MyTripAdapter(val context: TripFragment,val tripImg:Array<Int>, val trip:L
     }
 
     override fun getItemCount(): Int {
-        Log.d("test","itemSize===============================${trip?.size}")
+        Log.d(TAG,"itemSize===============================${trip?.size}")
         return trip?.size?:0
     }
 
