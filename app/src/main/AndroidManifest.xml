@@ -22,15 +22,6 @@
         android:theme="@style/Theme.Travel"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.android4.travel.RegisterActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.android4.travel.LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -39,6 +30,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.android4.travel.RegisterActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name="com.android4.travel.DiaryFiles.Diary2Activity"
             android:exported="false" />
@@ -60,6 +61,9 @@
             android:exported="false" />
         <activity
             android:name="com.android4.travel.DiaryFiles.DiaryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.android4.travel.DiaryFiles.DiaryDetail2Activity"
             android:exported="false" />
         <activity
             android:name="com.android4.travel.DiaryFiles.DiaryActivity"

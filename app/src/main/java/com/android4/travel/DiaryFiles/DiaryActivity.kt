@@ -28,6 +28,7 @@ class DiaryActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityDiaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val calval = intent.getStringExtra("year")
         binding.calenderView.setText(calval)
 

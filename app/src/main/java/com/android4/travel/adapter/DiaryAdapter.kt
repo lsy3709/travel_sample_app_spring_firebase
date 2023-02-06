@@ -34,6 +34,7 @@ class DiaryAdapter(val context:Context, val datas:List<Diary>?):RecyclerView.Ada
 
         binding.listTitleId.text=diary?.title
         binding.listDateId.text=diary?.date
+
     if(diary?.on_off=="비공개"){
         binding.listTitleId.setOnClickListener {
             val intent= Intent(holder.itemView?.context, DiaryDetailActivity::class.java)
