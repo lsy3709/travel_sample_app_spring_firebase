@@ -40,6 +40,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.android4.travel.DiaryFiles.Diary2Activity"
+            android:exported="false" />
+        <activity
             android:name="com.android4.travel.InputTripActivity"
             android:exported="false" />
         <activity

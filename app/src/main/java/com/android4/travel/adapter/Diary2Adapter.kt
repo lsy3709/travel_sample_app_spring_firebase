@@ -8,19 +8,21 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android4.travel.DiaryFiles.DiaryDetailActivity
 import com.android4.travel.DiaryFiles.TripReviewActivity
+import com.android4.travel.databinding.ItemDiary2Binding
 import com.android4.travel.databinding.ItemDiaryBinding
 import com.android4.travel.model.Diary
 //import com.android4.travel.model.LoginList
 
 
-class DiaryViewHolder2(val binding: ItemDiaryBinding): RecyclerView.ViewHolder(binding.root)
+class DiaryViewHolder2(val binding: ItemDiary2Binding): RecyclerView.ViewHolder(binding.root)
 
-class DiaryAdapter2(val context:Context, val datas:List<Diary>?):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class Diary2Adapter(val context:Context, val datas:List<Diary>?):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
 
     //뷰홀더가 생성 되었을때
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        DiaryViewHolder2(ItemDiaryBinding.inflate(LayoutInflater.from(parent.context)
+        DiaryViewHolder2(
+            ItemDiary2Binding.inflate(LayoutInflater.from(parent.context)
         ,parent,false))
 
 
@@ -32,32 +34,9 @@ class DiaryAdapter2(val context:Context, val datas:List<Diary>?):RecyclerView.Ad
         val diary = datas?.get(position)
 
 
-        binding.listTitleId.text=diary?.title
-        binding.listDateId.text=diary?.date
-    if(diary?.on_off=="비공개"){
-        binding.listTitleId.setOnClickListener {
-            val intent= Intent(holder.itemView?.context, DiaryDetailActivity::class.java)
-            intent.putExtra("dno",diary?.dno)
-            intent.putExtra("listTitle", diary?.title)
-            intent.putExtra("listDate",diary?.date)
-            intent.putExtra("listContent",diary?.content)
+        binding.listTitleId2.text=diary?.title
+        binding.listDateId2.text=diary?.date
 
-
-            ContextCompat.startActivity(holder.itemView.context,intent,null)
-        }
-    }
-    if(diary?.on_off=="공개"){
-        binding.listTitleId.setOnClickListener {
-            val intent= Intent(holder.itemView?.context,TripReviewActivity::class.java)
-            intent.putExtra("listTitle", diary?.title)
-            intent.putExtra("listDate",diary?.date)
-            intent.putExtra("listContent",diary?.content)
-
-            ContextCompat.startActivity(holder.itemView.context,intent,null)
-        }
-    }
-
-//        binding.pictureExistsImageView.
 
     }
     //목록 아이템 수
