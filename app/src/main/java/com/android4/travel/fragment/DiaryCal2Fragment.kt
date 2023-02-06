@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android4.travel.DiaryFiles.Diary2Activity
 import com.android4.travel.DiaryFiles.DiaryActivity
 import com.android4.travel.databinding.FragmentDiaryCal2Binding
 import java.util.*
@@ -17,7 +18,7 @@ import java.util.*
 class DiaryCal2Fragment : Fragment() {
     lateinit var binding: FragmentDiaryCal2Binding
     lateinit var recyclerView: RecyclerView
-    var dateString = ""
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -32,8 +33,7 @@ class DiaryCal2Fragment : Fragment() {
 
         binding.btnCal2.setOnClickListener {
             //호출시 문제 발생
-            val intent = Intent(activity, DiaryActivity::class.java)
-            intent.putExtra("year",dateString)
+            val intent = Intent(activity, Diary2Activity::class.java)
             startActivity(intent)
         }
         return binding.root
