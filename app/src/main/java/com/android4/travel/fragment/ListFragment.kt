@@ -26,6 +26,7 @@ import retrofit2.Response
 class ListFragment : Fragment() {
     lateinit var binding: FragmentListBinding
     lateinit var adapter: MyTripListAdapter
+    val TAG : String = "ListFragment";
     var username=""
     var nickname=""
 
@@ -70,21 +71,21 @@ class ListFragment : Fragment() {
 
         myRef.get().addOnSuccessListener {
             username=it.value.toString()
-            Log.d("test","firebase===========================${it.value.toString()}")
+            Log.d(TAG,"firebase===========================${it.value.toString()}")
             val networkService = (context?.applicationContext as MyApplication).networkService
 
             var oneUserCall = networkService.doGetOneUser(username)
             oneUserCall.enqueue(object: Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     nickname = response.body()?.nickname.toString()
-                    Log.d("pjh", "===================nickname: $nickname")
+                    Log.d(TAG, "===================nickname: $nickname")
 
                     val tripListCall = networkService.doGetTripList()
                     tripListCall.enqueue(object: Callback<TripListModel>{
                         override fun onResponse(call: Call<TripListModel>, response: Response<TripListModel>) {
 
                             val tripList = response.body() //responsebody에 있는 값을 가져옴
-                            Log.d("wsy", "$tripList")
+                            Log.d(TAG, "$tripList")
 
 //                binding.tripListRecyclerView.adapter = MyTripListAdapter(this@ListFragment, tripList?.trips)
 //                binding.tripListRecyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
@@ -112,11 +113,11 @@ class ListFragment : Fragment() {
                                             var tripListModel = arrayListOf<Trip>()
                                             for(i in 0 until (tripList?.trips?.size ?:0)){
                                                 memberCheck = tripList?.trips?.get(i)?.member?.split(",") ?: null
-                                                Log.d("test","$i========================${memberCheck?.size}")
+                                                Log.d(TAG,"$i========================${memberCheck?.size}")
                                                 if(memberCheck?.size?.minus(1) == 1){
                                                     tripList?.trips?.get(i)?.let { tripListModel?.add(it) }
-                                                    Log.d("test","$i================================")
-                                                    Log.d("test","========================${tripList?.trips?.get(i)}")
+                                                    Log.d(TAG,"$i================================")
+                                                    Log.d(TAG,"========================${tripList?.trips?.get(i)}")
                                                 }
                                                 adapter = MyTripListAdapter(this@ListFragment, tripListModel, nickname)
                                             }
@@ -126,7 +127,7 @@ class ListFragment : Fragment() {
                                             for(i in 0 until (tripList?.trips?.size ?:0)){
                                                 memberCheck = tripList?.trips?.get(i)?.member?.split(",") ?: null
                                                 if(memberCheck?.size?.minus(1)!! > 1){
-                                                    Log.d("test","$i================================")
+                                                    Log.d(TAG,"$i================================")
                                                     tripList?.trips?.get(i)?.let { tripListModel?.add(it) }
                                                 }
                                                 adapter = MyTripListAdapter(this@ListFragment, tripListModel, nickname)
@@ -153,7 +154,7 @@ class ListFragment : Fragment() {
 
 
         }
-        Log.d("test", "2222222222=========================$username")
+        Log.d(TAG, "2222222222=========================$username")
 
         val networkService = (context?.applicationContext as MyApplication).networkService
         val tripListCall = networkService.doGetMyTripList(username)
@@ -161,7 +162,7 @@ class ListFragment : Fragment() {
             override fun onResponse(call: Call<TripListModel>, response: Response<TripListModel>) {
 
                 val tripList = response.body() //responsebody에 있는 값을 가져옴
-                Log.d("wsy", "$tripList")
+                Log.d(TAG, "$tripList")
 
 //                binding.tripListRecyclerView.adapter = MyTripListAdapter(this@ListFragment, tripList?.trips)
 //                binding.tripListRecyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
@@ -189,11 +190,11 @@ class ListFragment : Fragment() {
                                 var tripListModel = arrayListOf<Trip>()
                                 for(i in 0 until (tripList?.trips?.size ?:0)){
                                     memberCheck = tripList?.trips?.get(i)?.member?.split(",") ?: null
-                                    Log.d("test","$i========================${memberCheck?.size}")
+                                    Log.d(TAG,"$i========================${memberCheck?.size}")
                                     if(memberCheck?.size?.minus(1) == 1){
                                         tripList?.trips?.get(i)?.let { tripListModel?.add(it) }
-                                        Log.d("test","$i================================")
-                                        Log.d("test","========================${tripList?.trips?.get(i)}")
+                                        Log.d(TAG,"$i================================")
+                                        Log.d(TAG,"========================${tripList?.trips?.get(i)}")
                                     }
                                     adapter = MyTripListAdapter(this@ListFragment, tripListModel, nickname)
                                 }
@@ -203,7 +204,7 @@ class ListFragment : Fragment() {
                                 for(i in 0 until (tripList?.trips?.size ?:0)){
                                     memberCheck = tripList?.trips?.get(i)?.member?.split(",") ?: null
                                     if(memberCheck?.size?.minus(1)!! > 1){
-                                        Log.d("test","$i================================")
+                                        Log.d(TAG,"$i================================")
                                         tripList?.trips?.get(i)?.let { tripListModel?.add(it) }
                                     }
                                     adapter = MyTripListAdapter(this@ListFragment, tripListModel, nickname)
