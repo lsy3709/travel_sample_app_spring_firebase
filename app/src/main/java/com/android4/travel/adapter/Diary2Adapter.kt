@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android4.travel.DiaryFiles.DiaryDetail2Activity
 import com.android4.travel.DiaryFiles.DiaryDetailActivity
 import com.android4.travel.DiaryFiles.TripReviewActivity
 import com.android4.travel.databinding.ItemDiary2Binding
@@ -21,8 +22,7 @@ class Diary2Adapter(val context:Context, val datas:List<Diary>?):RecyclerView.Ad
 
     //뷰홀더가 생성 되었을때
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        DiaryViewHolder2(
-            ItemDiary2Binding.inflate(LayoutInflater.from(parent.context)
+        DiaryViewHolder2(ItemDiary2Binding.inflate(LayoutInflater.from(parent.context)
         ,parent,false))
 
 
@@ -38,6 +38,28 @@ class Diary2Adapter(val context:Context, val datas:List<Diary>?):RecyclerView.Ad
         binding.listDateId2.text=diary?.date
 
 
+    if(diary?.on_off=="비공개"){
+        binding.listTitleId2.setOnClickListener {
+            val intent= Intent(holder.itemView?.context, DiaryDetail2Activity::class.java)
+            intent.putExtra("dno",diary?.dno)
+            intent.putExtra("listTitle", diary?.title)
+            intent.putExtra("listDate",diary?.date)
+            intent.putExtra("listContent",diary?.content)
+
+
+            ContextCompat.startActivity(holder.itemView.context,intent,null)
+        }
+    }
+    if(diary?.on_off=="공개"){
+        binding.listTitleId2.setOnClickListener {
+            val intent= Intent(holder.itemView?.context,TripReviewActivity::class.java)
+            intent.putExtra("listTitle", diary?.title)
+            intent.putExtra("listDate",diary?.date)
+            intent.putExtra("listContent",diary?.content)
+
+            ContextCompat.startActivity(holder.itemView.context,intent,null)
+        }
+    }
     }
     //목록 아이템 수
     override fun getItemCount(): Int {

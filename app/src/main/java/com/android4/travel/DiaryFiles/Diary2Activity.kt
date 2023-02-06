@@ -29,13 +29,20 @@ class Diary2Activity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityDiary2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.rg2.setOnCheckedChangeListener { radioGroup, i ->
+            var rb = findViewById<RadioButton>(i)
+            if(rb!=null)
+                binding.rsCheck.setText(rb.text.toString())
+
+        }
     }
 
     //동기화
-//    override fun onStart() {
-//        super.onStart()
-//
-//    }
+    override fun onStart() {
+        super.onStart()
+
+    }
 
     override fun onResume() {
         super.onResume()
