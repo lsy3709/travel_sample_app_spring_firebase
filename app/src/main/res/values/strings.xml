@@ -10,4 +10,10 @@
         <item> Personal </item>
         <item> Team </item>
     </string-array>
+
+    <string-array name="diaryListOnOffItem">
+        <item> All </item>
+        <item> Personal </item>
+        <item> Team </item>
+    </string-array>
 </resources>
