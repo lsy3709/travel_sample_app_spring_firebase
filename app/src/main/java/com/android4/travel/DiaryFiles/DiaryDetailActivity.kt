@@ -21,10 +21,11 @@ class DiaryDetailActivity : AppCompatActivity() {
         val title = intent.getStringExtra("listTitle")
         val date=intent.getStringExtra("listDate")
         val content=intent.getStringExtra("listContent")
+        val listImage_url=intent.getStringExtra("listImage_url")
 
         binding.listDateId1.setText(date)
-        binding.listTitleId1.setText(title)
         binding.contentsTextView.setText(content)
+//        binding.picture1.setImageBitmap()
 
 
 
