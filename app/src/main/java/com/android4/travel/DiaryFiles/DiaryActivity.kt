@@ -197,6 +197,16 @@ class DiaryActivity : AppCompatActivity(){
 
             bitmap?.let {
                 binding.GalleryImage.setImageBitmap(bitmap)
+                //이미지 비트맵 -> base64 인코딩 결과 문자열
+                // 프리퍼런스에 저장 테스트
+                var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
+                val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
+                pref.edit().run {
+                    putString("imgInfo", imgInfo)
+                    commit()
+                }
+                val resultStr : String? = pref.getString("imgInfo","default")
+                Log.d(TAG,"imgInfo 결과 : $resultStr")
             } ?: let{
                 Log.d("test", "bitmap null")
             }
@@ -204,7 +214,22 @@ class DiaryActivity : AppCompatActivity(){
             e.printStackTrace()
         }
     }
-
+    // Base64 인코딩부분
+//            val ins: InputStream? = currentImageURL?.let {
+//                applicationContext.contentResolver.openInputStream(
+//                    it
+//                )
+//            }
+//            val img: Bitmap = BitmapFactory.decodeStream(ins)
+//            ins?.close()
+//            val resized = Bitmap.createScaledBitmap(img, 256, 256, true)
+//            val byteArrayOutputStream = ByteArrayOutputStream()
+//            resized.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
+//            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+//            val outStream = ByteArrayOutputStream()
+//            val res: Resources = resources
+//            profileImageBase64 = Base64.encodeToString(byteArray, NO_WRAP)
+//            // 여기까지 인코딩 끝
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
@@ -234,80 +259,6 @@ class DiaryActivity : AppCompatActivity(){
         }
         return inSampleSize
     }
-
-
-//    private val OPEN_GALLERY = 2
-//
-//    private fun openGallery() {
-//        val intent :Intent = Intent(Intent.ACTION_PICK)
-//        intent.setType("image/*")
-//        startActivityForResult(intent,OPEN_GALLERY)
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(resultCode !=Activity.RESULT_OK){
-//            return
-//        }
-//
-//        when(requestCode){
-//            OPEN_GALLERY -> {
-//
-//                if(resultCode == Activity.RESULT_OK && requestCode == OPEN_GALLERY){
-//                    binding.GalleryImage.setImageURI(data?.data)
-//
-//                //Toast.makeText(this, binding.GalleryImage.setImageURI(data?.data).toString(),Toast.LENGTH_SHORT).show()
-//                }else{
-//                    Toast.makeText(this,"이미지를 선택하지 않았습니다.",Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
-
-
-    //==============================================================
-
-//    private fun openGallery(){
-//        val intent = Intent(Intent.ACTION_PICK)
-//
-//        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//        intent.type = "image/*"
-//        startActivityForResult(intent, 102)
-//    }
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, intent)
-//
-//        if (requestCode == 102 && resultCode == Activity.RESULT_OK){
-//            currentImageURL = intent?.data
-//            // Base64 인코딩부분
-//            val ins: InputStream? = currentImageURL?.let {
-//                applicationContext.contentResolver.openInputStream(
-//                    it
-//                )
-//            }
-//            val img: Bitmap = BitmapFactory.decodeStream(ins)
-//            ins?.close()
-//            val resized = Bitmap.createScaledBitmap(img, 256, 256, true)
-//            val byteArrayOutputStream = ByteArrayOutputStream()
-//            resized.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
-//            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-//            val outStream = ByteArrayOutputStream()
-//            val res: Resources = resources
-//            profileImageBase64 = Base64.encodeToString(byteArray, NO_WRAP)
-//            // 여기까지 인코딩 끝
-//
-//            // 이미지 뷰에 선택한 이미지 출력
-//            val imageview: ImageView = findViewById(id.pet_image)
-//            imageview.setImageURI(currentImageURL)
-//            try {
-//                //이미지 선택 후 처리
-//            }catch (e: Exception){
-//                e.printStackTrace()
-//            }
-//        } else{
-//            Log.d("ActivityResult", "something wrong")
-//        }
-//    }
 
 }
 
