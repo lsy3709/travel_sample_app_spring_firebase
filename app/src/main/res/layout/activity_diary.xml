@@ -131,8 +131,8 @@
 
             <ImageView
                 android:id="@+id/GalleryImage"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 tools:src="@tools:sample/avatars">
 
