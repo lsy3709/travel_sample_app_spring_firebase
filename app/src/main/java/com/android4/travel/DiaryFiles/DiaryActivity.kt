@@ -2,15 +2,20 @@ package com.android4.travel.DiaryFiles
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android4.travel.MyApplication
+import com.android4.travel.R
 import com.android4.travel.adapter.DiaryAdapter
 
 import com.android4.travel.databinding.ActivityDiaryBinding
@@ -179,6 +184,102 @@ class DiaryActivity : AppCompatActivity(){
             }
         }
     }
+    // 1 인텐트로 갤러리 앱의 사진 목록을 출력하는 코드
+    // 예제
+    // 인텐트의 액션 문자열 : Intent.ACTION_PICK
+    // 데이터 : MediaStore.Images.Media.CONTENT_TYPE
+    // 타입 : "image/*"
+//    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//    intent.type = "image/*"
+//    requestGalleyLancher.lanch(intent)
+
+//    선택한 사진 액티비티 화면에 출력 OOM(out of memory) 발생 주의 위해서 사이즈 변경.
+//     BitmapFactory.Option 객체의 inSampleSize 값 지정 또는
+//     원본 데이터의 크기와 화면에 출력되는 이미지의 크기를 비교해서 적절한 비율로 만드는 함수
+//     깡쌤 샘플 코드 활용
+    //
+//    private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
+//        val options = BitmapFactory.Options()
+//        //옵션만 설정하기 위해서 설정.
+//        options.inJustDecodeBounds = true
+//        try {
+//            var inputStream = contentResolver.openInputStream(fileUri)
+//
+//            //inJustDecodeBounds 값을 true 로 설정한 상태에서 decodeXXX() 를 호출.
+//            // 실제로 Bitmap 객체가 만들어지지 않고 아래에
+//            //로딩 하고자 하는 이미지의 각종 정보가 options 에 설정 된다.
+//            BitmapFactory.decodeStream(inputStream, null, options)
+//            inputStream!!.close()
+//            inputStream = null
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        //비율 계산........................
+//        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+//        var inSampleSize = 1
+//        //inSampleSize 비율 계산
+//        if (height > reqHeight || width > reqWidth) {
+//
+//            val halfHeight: Int = height / 2
+//            val halfWidth: Int = width / 2
+//
+//            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+//                inSampleSize *= 2
+//            }
+//        }
+//        return inSampleSize
+//    }
+
+    // 갤러리 앱의 목록에서 사용자가 사진을 하나 선택해서 되돌아왔을 때 위의
+    // calculateInSampleSize() 함수를 이용해 이미지를 불러오는 코드.
+    //
+    //gallery request launcher..................
+//    val requestGalleryLauncher = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult())
+//    {
+//        try {
+//            //inSampleSize 비율 계산, 지정
+//            val calRatio = calculateInSampleSize(
+//                it.data!!.data!!,
+//                //출력할 이미지의 화면 크기를 나타냄
+//                // dimen 리소스값을 얻어 지정. 임의의 숫자를 지정해도 됨.
+//                resources.getDimensionPixelSize(R.dimen.imgSize),
+//                resources.getDimensionPixelSize(R.dimen.imgSize)
+//            )
+//            val option = BitmapFactory.Options()
+//            option.inSampleSize = calRatio
+//
+//            //이미지 로딩
+//            // 갤러리 앱의 콘텐츠 프로바이더가 제공하는 InputStream 객체를 가져옴.
+//            // 이 객체에 사용자가 갤러리 앱에서 선택한 사진 데이터가 담겨 있음.
+//            // contentResolver.openInputStream(it.data!!.data!!)
+//            //
+//            var inputStream = contentResolver.openInputStream(it.data!!.data!!)
+//            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+//            inputStream!!.close()
+//            inputStream = null
+//
+//            bitmap?.let {
+//                binding.userImageView.setImageBitmap(bitmap)
+//            } ?: let{
+//                Log.d("test", "bitmap null")
+//            }
+//        }catch (e: Exception){
+//            e.printStackTrace()
+//        }
+//    }
+    //주의사항
+    // 카메라로 찍은 사진 이미지는 갤러리 앱의 콘텐츠 프로바이더를 이용해 사진의 경로를 얻은 뒤
+    // 그 경로의 이미지를 decodeFile() 함수로 가저오는 것은 API 레벨 29에서 deprecated 됨.
+    // 물론 지금 사용 가능하지만, 비추.
+    // 구글은 파일을 직접 읽는 방식이 아니라 갤러리 앱의 콘텐츠 프로바이더에서 제공하는
+    // InputStream 사용 권고.
+
+    //2 카메라 앱 연동하기
+    //
+
+
+    //==============================================================
 
 //    private fun openGallery(){
 //        val intent = Intent(Intent.ACTION_PICK)
