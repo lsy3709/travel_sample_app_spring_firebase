@@ -18,6 +18,8 @@ class DiaryCalFragment : Fragment() {
     lateinit var binding: FragmentDiaryCalBinding
     lateinit var recyclerView: RecyclerView
     var dateString = ""
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -27,6 +29,7 @@ class DiaryCalFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentDiaryCalBinding.inflate(inflater, container, false)
 
 
@@ -47,6 +50,7 @@ class DiaryCalFragment : Fragment() {
         }
 
         binding.btnCal.setOnClickListener {
+
             val intent = Intent(activity, DiaryActivity::class.java)
             intent.putExtra("year",dateString)
             startActivity(intent)

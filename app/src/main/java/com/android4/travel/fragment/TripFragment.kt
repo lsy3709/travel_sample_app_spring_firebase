@@ -93,12 +93,12 @@ class TripFragment : Fragment() {
 
                     binding.tripPersonalBtn.setOnClickListener {
                         val intent = Intent(context, InputTripActivity::class.java)
-                        intent.putExtra(TAG,0)
+                        intent.putExtra("check",0)
                         startActivity(intent)
                     }
                     binding.tripTeamBtn.setOnClickListener {
                         val intent = Intent(context, InputTripActivity::class.java)
-                        intent.putExtra(TAG,1)
+                        intent.putExtra("check",1)
                         startActivity(intent)
                     }
                 }

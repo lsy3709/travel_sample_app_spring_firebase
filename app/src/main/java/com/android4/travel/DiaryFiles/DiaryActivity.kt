@@ -1,43 +1,52 @@
 package com.android4.travel.DiaryFiles
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android4.travel.MyApplication
 import com.android4.travel.R
 import com.android4.travel.adapter.DiaryAdapter
-
 import com.android4.travel.databinding.ActivityDiaryBinding
 import com.android4.travel.model.Diary
 import com.android4.travel.model.DiaryListModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class DiaryActivity : AppCompatActivity(){
     lateinit var binding: ActivityDiaryBinding
     //lateinit var filePath: String
+    val TAG : String = "DiaryActivity"
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDiaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        //DiaryCalFragment에서 intent.putExtra("year",dateString)
         val calval = intent.getStringExtra("year")
         binding.calenderView.setText(calval)
+
+
+        // 전체 공유 프리퍼런스에 값을 가져와서 확인중.
+        val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
+        val loginId = loginSharedPref.getString("username","default")
+        binding.LoginId.setText(loginId)
 
         binding.rg1.setOnCheckedChangeListener { radioGroup, i ->
             var rb = findViewById<RadioButton>(i)
@@ -89,10 +98,13 @@ class DiaryActivity : AppCompatActivity(){
     //동기화
     override fun onStart() {
         super.onStart()
+
         binding.btnWrite.setOnClickListener {
             //일기 쓰기
-            val loginId=intent.getStringExtra("LoginId")
-                binding.LoginId.setText(loginId)
+//            val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
+//            val loginId = loginSharedPref.getString("username","default")
+//            binding.LoginId.setText(loginId)
+//            Log.d(TAG,"1===============loginId : $loginId")
 
             var diary= Diary(
                 dno =0,
@@ -104,9 +116,9 @@ class DiaryActivity : AppCompatActivity(){
                 good = 0,
                 trip_id =binding.LoginId.text.toString(),
                 image_url = "NULL"
-                //binding.GalleryImage.setImageURI(data?.data).toString()
+//                binding.GalleryImage.setImageURI(data?.data).toString()
             )
-
+            Log.d(TAG,"3===============loginId : $binding.LoginId.text.toString()")
             val networkService=(applicationContext as MyApplication).networkService
             val diaryInsertCall = networkService.insert(diary)
             diaryInsertCall.enqueue(object: Callback<String>{

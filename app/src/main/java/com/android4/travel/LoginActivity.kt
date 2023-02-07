@@ -113,7 +113,10 @@ class LoginActivity : AppCompatActivity() {
 
                         //로그인 후 메인 화면으로
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-
+                        val data1 = loginSharedPref.getString("Authorization","default")
+                        val username2 = loginSharedPref.getString("username","default")
+                        Log.d(TAG, "8===============loginSharedPref.getString...........$data1:  $username2")
+                        intent.putExtra("LoginId",username2)
                         startActivity(intent)
                     }
                 }
