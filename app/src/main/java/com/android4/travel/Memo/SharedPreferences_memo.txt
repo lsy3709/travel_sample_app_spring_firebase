@@ -83,6 +83,17 @@ val data1 = sharedPref.getString("data1","world")
 val data2 = sharedPref.getInt("data2",10)
 
 
+ 프레퍼런스 저장 가져오기 샘플
+                val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
+                pref.edit().run {
+                    putString("imgInfo", imgInfo)
+                    commit()
+                }
+                val resultStr2 : String? = pref.getString("imgInfo","default")
+                val result3 = resultStr2.toString()
+                Log.d(TAG,"imgInfo result3 결과 : $resultStr2")
+                Log.d(TAG,"imgInfo result3 결과 : $result3")
+
 
 
 

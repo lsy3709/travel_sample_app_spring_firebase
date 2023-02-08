@@ -47,11 +47,6 @@ class DiaryActivity : AppCompatActivity(){
         val loginId = loginSharedPref.getString("username","default")
         binding.LoginId.setText(loginId)
 
-        // 이미지 값 숨겨서 넣어보기 테스트
-        val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
-        val resultStr : String? = pref.getString("imgInfo","default")
-        binding.imageUri.setText(resultStr)
-
         binding.rg1.setOnCheckedChangeListener { radioGroup, i ->
             var rb = findViewById<RadioButton>(i)
             if(rb!=null)
@@ -104,11 +99,6 @@ class DiaryActivity : AppCompatActivity(){
         super.onStart()
 
         binding.btnWrite.setOnClickListener {
-            //일기 쓰기
-//            val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
-//            val loginId = loginSharedPref.getString("username","default")
-//            binding.LoginId.setText(loginId)
-//            Log.d(TAG,"1===============loginId : $loginId")
 
             var diary= Diary(
                 dno =0,
@@ -119,10 +109,10 @@ class DiaryActivity : AppCompatActivity(){
                 hitcount = 0,
                 good = 0,
                 trip_id =binding.LoginId.text.toString(),
-                image_url = binding.imageUri.text.toString()
+                image_uri = binding.imageuri.text.toString()
 //                binding.GalleryImage.setImageURI(data?.data).toString()
             )
-            Log.d(TAG,"3===============loginId : $binding.LoginId.text.toString()")
+
             val networkService=(applicationContext as MyApplication).networkService
             val diaryInsertCall = networkService.insert(diary)
             diaryInsertCall.enqueue(object: Callback<Unit>{
@@ -205,16 +195,10 @@ class DiaryActivity : AppCompatActivity(){
                 binding.GalleryImage.setImageBitmap(bitmap)
                 //이미지 비트맵 -> base64 인코딩 결과 문자열
                 // 프리퍼런스에 저장 테스트
+
                 var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
-                val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
-                pref.edit().run {
-                    putString("imgInfo", imgInfo)
-                    commit()
-                }
-                val resultStr2 : String? = pref.getString("imgInfo","default")
-                val result3 = resultStr2.toString()
-                Log.d(TAG,"imgInfo result3 결과 : $resultStr2")
-                Log.d(TAG,"imgInfo result3 결과 : $result3")
+                binding.imageuri.setText(imgInfo)
+
             } ?: let{
                 Log.d("test", "bitmap null")
             }

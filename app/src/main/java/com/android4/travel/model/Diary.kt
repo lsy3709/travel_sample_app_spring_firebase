@@ -9,5 +9,5 @@ data class Diary(
     var hitcount:Int,
     var good:Int,
     var trip_id:String,
-    var image_url: String
+    var image_uri: String
 )
