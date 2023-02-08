@@ -42,7 +42,7 @@ class DiaryAdapter(val context:Context, val datas:List<Diary>?):RecyclerView.Ada
             intent.putExtra("listTitle", diary?.title)
             intent.putExtra("listDate",diary?.date)
             intent.putExtra("listContent",diary?.content)
-            intent.putExtra("listImage_url",diary?.image_uri)
+            intent.putExtra("listImage_url", diary?.image_uri )
 
 
 

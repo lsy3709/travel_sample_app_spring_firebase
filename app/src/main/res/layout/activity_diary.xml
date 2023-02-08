@@ -8,182 +8,6 @@
     android:padding="10dp"
     tools:context=".DiaryFiles.DiaryActivity">
 
-    <LinearLayout
-        android:id="@+id/DiaryListOn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:visibility="invisible"
-
-                    >
-
-                </Button>
-                <TextView
-                    android:id="@+id/calenderView"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="년 월 일"
-                    android:textSize="17sp">
-                </TextView>
-
-
-                <RadioGroup
-                    android:id="@+id/rg1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    >
-
-                    <RadioButton
-                        android:id="@+id/reviewId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="공개" />
-                    <RadioButton
-                        android:id="@+id/secretId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="비공개" />
-
-                </RadioGroup>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/rsCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" ">
-                </TextView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-                <Button
-                    android:id="@+id/btnMyDiary"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#619CD6"
-                    android:text="내일기"
-                    >
-                </Button>
-
-                <Button
-                    android:id="@+id/btnReview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여행리뷰"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#619CD6"
-                    >
-                </Button>
-            </LinearLayout>
-
-
-            <EditText
-                android:id="@+id/titleId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="제목"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/GalleryImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="fitCenter"
-                tools:src="@tools:sample/avatars">
-
-            </ImageView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/contentId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="오늘 하루를 기록해요"
-                android:inputType="none">
-            </EditText>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <Button
-                android:id="@+id/btnGallery"
-                android:layout_width="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#619CD6"
-                android:text="사진첨부" />
-
-            <Button
-                android:id="@+id/btnWrite"
-                android:backgroundTint="#619CD6"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일기작성" />
-            <TextView
-                android:id="@+id/LoginId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text=""
-                >
-            </TextView>
-
-            <TextView
-                android:id="@+id/imageuri"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text=""
-                >
-            </TextView>
-        </LinearLayout>
-    </LinearLayout>
-
 
     <!--    <RelativeLayout-->
     <!--        android:layout_width="match_parent"-->
@@ -293,6 +117,173 @@
         android:orientation="vertical">
 
     </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/DiaryListOn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+
+                    >
+
+                </Button>
+
+                <TextView
+                    android:id="@+id/calenderView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="년 월 일"
+                    android:textSize="17sp"></TextView>
+
+
+                <RadioGroup
+                    android:id="@+id/rg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/reviewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="공개" />
+
+                    <RadioButton
+                        android:id="@+id/secretId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="비공개" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/rsCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:visibility="gone"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnMyDiary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#619CD6"
+                    android:text="내일기"></Button>
+
+                <Button
+                    android:id="@+id/btnReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#619CD6"
+                    android:text="여행리뷰"></Button>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/titleId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="제목" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/GalleryImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="fitCenter"
+                tools:src="@tools:sample/avatars">
+
+            </ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/contentId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="오늘 하루를 기록해요"
+                android:inputType="none"></EditText>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#619CD6"
+                android:text="사진첨부" />
+
+            <Button
+                android:id="@+id/btnWrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#619CD6"
+                android:text="일기작성" />
+
+            <TextView
+                android:id="@+id/LoginId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"></TextView>
+
+            <TextView
+                android:id="@+id/imageuri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"></TextView>
+        </LinearLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDiaryView"

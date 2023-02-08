@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.android4.travel.MyApplication
 import com.android4.travel.databinding.ActivityDiaryDetailBinding
 import retrofit2.Call
@@ -22,13 +24,21 @@ class DiaryDetailActivity : AppCompatActivity() {
         val title = intent.getStringExtra("listTitle")
         val date=intent.getStringExtra("listDate")
         val content=intent.getStringExtra("listContent")
-        val listImage_url=intent.getStringExtra("listImage_url")
-        val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
-        val resultStr2 : String? = pref.getString("imgInfo","default")
-        val imageUri1 = Base64Util.stringToBitMap(listImage_url)
+
+            val listImage_url=intent.getStringExtra("listImage_url")
+      if(listImage_url != null && !listImage_url.isBlank()) {
+            val imageUri1 = Base64Util.stringToBitMap(listImage_url)
+            binding.picture1.setImageBitmap(imageUri1)
+          binding.picture1.visibility = View.VISIBLE
+          binding.picturelabel1.visibility = View.VISIBLE
+      }
+
+
+
+        binding.listTitleId1.setText(title)
         binding.listDateId1.setText(date)
         binding.contentsTextView.setText(content)
-        binding.picture1.setImageBitmap(imageUri1)
+
 
 
 
