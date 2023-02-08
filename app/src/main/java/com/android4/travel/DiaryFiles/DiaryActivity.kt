@@ -31,7 +31,6 @@ class DiaryActivity : AppCompatActivity(){
     val TAG : String = "DiaryActivity"
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDiaryBinding.inflate(layoutInflater)
@@ -47,6 +46,11 @@ class DiaryActivity : AppCompatActivity(){
         val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
         val loginId = loginSharedPref.getString("username","default")
         binding.LoginId.setText(loginId)
+
+        // 이미지 값 숨겨서 넣어보기 테스트
+        val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
+        val resultStr : String? = pref.getString("imgInfo","default")
+        binding.imageUri.setText(resultStr)
 
         binding.rg1.setOnCheckedChangeListener { radioGroup, i ->
             var rb = findViewById<RadioButton>(i)
@@ -115,18 +119,19 @@ class DiaryActivity : AppCompatActivity(){
                 hitcount = 0,
                 good = 0,
                 trip_id =binding.LoginId.text.toString(),
-                image_url = "NULL"
+                image_url = binding.imageUri.text.toString()
 //                binding.GalleryImage.setImageURI(data?.data).toString()
             )
             Log.d(TAG,"3===============loginId : $binding.LoginId.text.toString()")
             val networkService=(applicationContext as MyApplication).networkService
             val diaryInsertCall = networkService.insert(diary)
-            diaryInsertCall.enqueue(object: Callback<String>{
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    println(response.body().toString())
+            diaryInsertCall.enqueue(object: Callback<Unit>{
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+//                    println(response.body().toString())
+//                    Log.d(TAG,"4===============response.body().toString() : $response.body().toString()")
                     Toast.makeText(applicationContext,"내일기에 저장 성공했습니다!",Toast.LENGTH_SHORT).show()
                 }
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
                     call.cancel()
                 }
 
@@ -140,6 +145,7 @@ class DiaryActivity : AppCompatActivity(){
 
     override fun onResume() {
         super.onResume()
+
         binding.btnMyDiary.setOnClickListener {
             binding.DiaryListOn.visibility = View.GONE
             Toast.makeText(this,"제목 클릭 자세히 보기",Toast.LENGTH_SHORT).show()
@@ -205,8 +211,10 @@ class DiaryActivity : AppCompatActivity(){
                     putString("imgInfo", imgInfo)
                     commit()
                 }
-                val resultStr : String? = pref.getString("imgInfo","default")
-                Log.d(TAG,"imgInfo 결과 : $resultStr")
+                val resultStr2 : String? = pref.getString("imgInfo","default")
+                val result3 = resultStr2.toString()
+                Log.d(TAG,"imgInfo result3 결과 : $resultStr2")
+                Log.d(TAG,"imgInfo result3 결과 : $result3")
             } ?: let{
                 Log.d("test", "bitmap null")
             }

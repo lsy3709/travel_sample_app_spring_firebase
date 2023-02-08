@@ -1,0 +1,36 @@
+
+create database travel_db;
+INSERT INTO user VALUES (1,'lsy','1234','이상용');
+commit;
+CREATE TABLE user (
+  user_id int NOT NULL AUTO_INCREMENT,
+  username varchar(200) NOT NULL,
+  password varchar(200) NOT NULL,
+  nickname varchar(200) NOT NULL,
+  PRIMARY KEY (user_id)
+) ENGINE=InnoDB AUTO_INCREMENT=9;
+use travel_db;
+show tables;
+drop table user;
+select * from diary where on_off='비공개';
+ALTER TABLE diary MODIFY COLUMN image_uri longblob ;
+desc diary;
+select * from user;
+select * from chat;
+select * from diary;
+select * from photo;
+select * from trip;
+INSERT INTO user VALUES (1,'lsy','1234','이상용');
+update trip set on_off=1 where title='사진 첨부 테스트';
+update diary set on_off='공개' where title='사진 첨부 테스트';
+delete from trip where title = '해운대 가자!';
+show variables like 'lower_case_table_names';
+GRANT ALL PRIVILEGES ON *.* to 'root'@'%';
+flush privileges;
+select * from user;
+select * from trip;
+select * from diary;
+select * from chat;
+select * from photo;
+update trip set on_off=1 where title='제주갈래';
+commit;
