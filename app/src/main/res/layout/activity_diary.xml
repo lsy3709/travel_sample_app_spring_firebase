@@ -120,6 +120,15 @@
                 >
             </TextView>
 
+            <TextView
+                android:id="@+id/imageUri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text=""
+                >
+            </TextView>
+
 
 
         </LinearLayout>

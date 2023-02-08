@@ -28,7 +28,7 @@ interface INetworkService {
     fun doGetTripDiaryList(): Call<DiaryListModel>
 
     @POST("travel/diaryinsert")
-    fun insert(@Body trip: Diary):Call<String>
+    fun insert(@Body trip: Diary):Call<Unit>
 
     @POST("travel/diaryListDelete/{dno}")
     fun  delete(@Path("dno")dno:Int):Call<Unit>

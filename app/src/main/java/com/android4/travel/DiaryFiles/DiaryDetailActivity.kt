@@ -1,5 +1,6 @@
 package com.android4.travel.DiaryFiles
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,10 +23,12 @@ class DiaryDetailActivity : AppCompatActivity() {
         val date=intent.getStringExtra("listDate")
         val content=intent.getStringExtra("listContent")
         val listImage_url=intent.getStringExtra("listImage_url")
-
+        val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
+        val resultStr2 : String? = pref.getString("imgInfo","default")
+        val imageUri1 = Base64Util.stringToBitMap(resultStr2)
         binding.listDateId1.setText(date)
         binding.contentsTextView.setText(content)
-//        binding.picture1.setImageBitmap()
+        binding.picture1.setImageBitmap(imageUri1)
 
 
 
