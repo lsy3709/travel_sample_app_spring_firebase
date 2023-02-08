@@ -25,7 +25,7 @@ class DiaryDetailActivity : AppCompatActivity() {
         val listImage_url=intent.getStringExtra("listImage_url")
         val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
         val resultStr2 : String? = pref.getString("imgInfo","default")
-        val imageUri1 = Base64Util.stringToBitMap(resultStr2)
+        val imageUri1 = Base64Util.stringToBitMap(listImage_url)
         binding.listDateId1.setText(date)
         binding.contentsTextView.setText(content)
         binding.picture1.setImageBitmap(imageUri1)
