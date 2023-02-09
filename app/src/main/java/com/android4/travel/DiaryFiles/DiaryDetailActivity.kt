@@ -27,7 +27,7 @@ class DiaryDetailActivity : AppCompatActivity() {
         binding=ActivityDiaryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dno = intent.getStringExtra("dno")
+        val dno = intent.getIntExtra("dno",0)
         val title = intent.getStringExtra("listTitle")
         val date=intent.getStringExtra("listDate")
         val content=intent.getStringExtra("listContent")

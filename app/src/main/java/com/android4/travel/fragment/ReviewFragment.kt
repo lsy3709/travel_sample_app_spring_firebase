@@ -69,7 +69,8 @@ class ReviewFragment : Fragment() {
                     Log.d(TAG, "===================nickname: $nickname")
 
                    // val tripListCall = networkService.doGetTripList()
-                    val diaryListCall = networkService.doGetDiaryList()
+
+                    val diaryListCall = networkService.doGetDiaryList(username)
                     diaryListCall.enqueue(object: Callback<DiaryListModel> {
                         override fun onResponse(call: Call<DiaryListModel>, response: Response<DiaryListModel>) {
 

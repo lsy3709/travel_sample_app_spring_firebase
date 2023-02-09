@@ -141,7 +141,9 @@ class DiaryActivity : AppCompatActivity(){
             Toast.makeText(this,"제목 클릭 자세히 보기",Toast.LENGTH_SHORT).show()
 
             val networkService = (applicationContext as MyApplication).networkService
-            val diaryListCall = networkService.doGetDiaryList()
+            val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
+            val LoginId = loginSharedPref.getString("username","default")
+            val diaryListCall = networkService.doGetDiaryList(LoginId)
 
             diaryListCall.enqueue(object: Callback<DiaryListModel>{
                 override fun onResponse(call: Call<DiaryListModel>, response: Response<DiaryListModel>

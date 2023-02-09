@@ -21,8 +21,8 @@ interface INetworkService {
     @GET("travel/trip/plusMember")
     fun updateTripMember(@Query("title")title:String?, @Query("member")member:String?): Call<Trip>
 
-    @GET("travel/diaryList")
-    fun doGetDiaryList(): Call<DiaryListModel>
+    @GET("travel/diaryList/{trip_id}")
+    fun doGetDiaryList(@Path("trip_id")trip_id : String?): Call<DiaryListModel>
 
     @GET("travel/tripDiaryList")
     fun doGetTripDiaryList(): Call<DiaryListModel>

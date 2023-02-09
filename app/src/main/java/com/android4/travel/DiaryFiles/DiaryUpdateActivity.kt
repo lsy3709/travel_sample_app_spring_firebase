@@ -2,6 +2,7 @@ package com.android4.travel.DiaryFiles
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startActivity
@@ -19,6 +21,8 @@ import com.android4.travel.R
 import com.android4.travel.databinding.ActivityDiaryDetailBinding
 import com.android4.travel.databinding.ActivityDiaryUpdateBinding
 import com.android4.travel.model.Diary
+import kotlinx.android.synthetic.main.activity_diary_update.*
+import kotlinx.android.synthetic.main.fragment_diary_cal.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,17 +38,21 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         binding = ActivityDiaryUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //프리퍼런스에 저장된 로그인 유저, 중간 저장소로
+        // 프리퍼런스, sqlite, firebase 등.
+        val loginSharedPref = getSharedPreferences("login_prof", Context.MODE_PRIVATE)
+        val LoginId = loginSharedPref.getString("username","default")
 
         val dno = intent.getIntExtra("dno", 0)
         val title = intent.getStringExtra("listTitle")
         val date = intent.getStringExtra("listDate")
         val content = intent.getStringExtra("listContent")
         val listImage_url = intent.getStringExtra("listImage_url")
-        Log.d(TAG,"1======시작시---dno 의 값 : $dno")
-        Log.d(TAG,"1======시작시---title 의 값 : $title")
-        Log.d(TAG,"1======시작시---date 의 값 : $date")
-        Log.d(TAG,"1======시작시---content 의 값 : $content")
-        Log.d(TAG,"1======시작시---listImage_url 의 값 : $listImage_url")
+//        Log.d(TAG,"1======시작시---dno 의 값 : $dno")
+//        Log.d(TAG,"1======시작시---title 의 값 : $title")
+//        Log.d(TAG,"1======시작시---date 의 값 : $date")
+//        Log.d(TAG,"1======시작시---content 의 값 : $content")
+//        Log.d(TAG,"1======시작시---listImage_url 의 값 : $listImage_url")
 
 
         if (listImage_url != null && !listImage_url.isBlank()) {
@@ -54,8 +62,9 @@ class DiaryUpdateActivity : AppCompatActivity() {
             binding.picturelabel1.visibility = View.VISIBLE
         }
 
-
-
+        //뷰에 숫자 입력시 방법 아래 샘플.
+        binding.dno.setText(""+dno)
+        binding.LoginId.setText(LoginId)
         binding.listTitleId1.setText(title)
         binding.listDateId1.setText(date)
         binding.contentsTextView.setText(content)
@@ -66,12 +75,25 @@ class DiaryUpdateActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        binding.rg1.setOnCheckedChangeListener { radioGroup, i ->
+            var rb = findViewById<RadioButton>(i)
+            if(rb!=null)
+                binding.rsCheck.setText(rb.text.toString())
+
+        }
+
         binding.listDateId1.setOnClickListener {
             val cal = Calendar.getInstance()
             val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth  ->
                 dateString = "${year}년 ${month+1}월 ${dayOfMonth}일"
                 binding.listDateId1.setText("날짜 :" +dateString)
             }
+
+                DatePickerDialog(
+                    this, dateSetListener, cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
+
+
         }
 
         binding.btnPic.setOnClickListener {
@@ -80,6 +102,7 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         binding.btnUpdate.setOnClickListener {
 
+            val dno = intent.getIntExtra("dno", 0)
             AlertDialog.Builder(this)
                 .setTitle("일기 수정")
                 .setMessage("일기를 수정하시겠습니까?")
@@ -87,7 +110,7 @@ class DiaryUpdateActivity : AppCompatActivity() {
                 .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                     // "예"를 선택했을 때의 Action
                     var diary= Diary(
-                        dno =0,
+                        dno =dno,
                         title =binding.listTitleId1.text.toString(),
                         content =binding.contentsTextView.text.toString(),
                         date =binding.listDateId1.text.toString(),
