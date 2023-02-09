@@ -8,37 +8,93 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+
+
+        <TextView
+            android:id="@+id/rsCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:visibility="gone"></TextView>
+
+        <EditText
+            android:id="@+id/listTitleId1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-            <TextView
-                android:id="@+id/listTitleId1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="제목"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="#619cd6"/>
+            android:text="제목"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#619cd6"/>
 
-            <TextView
-                android:id="@+id/listDateId1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="현재 날짜"
-                android:textSize="16sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/listDateId1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="현재 날짜"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/rg1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/reviewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="16sp"
+                android:text="공개" />
+
+            <RadioButton
+                android:id="@+id/secretId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:text="비공개" />
+
+        </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnPic"
+                android:layout_marginLeft="20dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="사진첨부"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:backgroundTint="#619CD6"/>
+
             <Button
                 android:id="@+id/btnUpdate"
                 android:layout_marginLeft="20dp"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="수정"
-                android:textSize="18sp"
+                android:text="수정적용"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:backgroundTint="#619CD6"/>
@@ -50,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="삭제"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:backgroundTint="#619CD6"/>
@@ -89,7 +145,7 @@
                     android:visibility="visible"
                     android:layout_marginLeft="20dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/contentsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,15 +157,19 @@
 
             </LinearLayout>
 
-
-
-<!--                <Button-->
-<!--                    android:id="@+id/btnUpdate"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="수정" />-->
         </ScrollView>
-
+        <TextView
+            android:id="@+id/LoginId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone"></TextView>
+        <TextView
+            android:id="@+id/imageuri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone"></TextView>
     </LinearLayout>
 
 
