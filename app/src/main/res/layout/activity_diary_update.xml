@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" "
-            android:visibility="gone"></TextView>
+            android:visibility="visible"></TextView>
 
         <EditText
             android:id="@+id/listTitleId1"
@@ -159,11 +159,17 @@
 
         </ScrollView>
         <TextView
+            android:id="@+id/dno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="visible"></TextView>
+        <TextView
             android:id="@+id/LoginId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:visibility="gone"></TextView>
+            android:visibility="visible"></TextView>
         <TextView
             android:id="@+id/imageuri"
             android:layout_width="match_parent"
