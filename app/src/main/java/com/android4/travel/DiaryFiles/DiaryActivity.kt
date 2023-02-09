@@ -206,22 +206,7 @@ class DiaryActivity : AppCompatActivity(){
             e.printStackTrace()
         }
     }
-    // Base64 인코딩부분
-//            val ins: InputStream? = currentImageURL?.let {
-//                applicationContext.contentResolver.openInputStream(
-//                    it
-//                )
-//            }
-//            val img: Bitmap = BitmapFactory.decodeStream(ins)
-//            ins?.close()
-//            val resized = Bitmap.createScaledBitmap(img, 256, 256, true)
-//            val byteArrayOutputStream = ByteArrayOutputStream()
-//            resized.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
-//            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-//            val outStream = ByteArrayOutputStream()
-//            val res: Resources = resources
-//            profileImageBase64 = Base64.encodeToString(byteArray, NO_WRAP)
-//            // 여기까지 인코딩 끝
+
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
