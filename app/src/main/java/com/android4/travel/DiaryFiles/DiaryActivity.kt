@@ -3,20 +3,21 @@ package com.android4.travel.DiaryFiles
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
-import android.widget.TextView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android4.travel.MainActivity
 import com.android4.travel.MyApplication
-import com.android4.travel.R
 import com.android4.travel.adapter.DiaryAdapter
 import com.android4.travel.databinding.ActivityDiaryBinding
 import com.android4.travel.model.Diary
@@ -24,6 +25,7 @@ import com.android4.travel.model.DiaryListModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class DiaryActivity : AppCompatActivity(){
     lateinit var binding: ActivityDiaryBinding
@@ -54,11 +56,26 @@ class DiaryActivity : AppCompatActivity(){
 
         }
 
+        // sample.mp4 설정
+        // 비디오 영상 샘플 플레이 해보기.
+        val uri = Uri.parse("android.resource://$packageName/raw/sample")
+        binding.VideoImage.setVideoURI(uri)
+// 비디오 뷰 테스트
+        binding.VideoImage.setOnPreparedListener {
+                mp -> // 준비 완료되면 비디오 재생
+            mp.start()
+        }
 
 
+        binding.btnMainView.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
 
+            startActivity(intent)
+        }
 
-
+        binding.btnVideo.setOnClickListener{
+            openVideo()
+        }
 
         binding.btnReview.setOnClickListener {
             binding.DiaryListOn.visibility = View.GONE
@@ -167,6 +184,17 @@ class DiaryActivity : AppCompatActivity(){
         }
     }
 
+    private fun openVideo() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "video/*"
+        requestVideoLauncherncher2.launch(intent)
+    }
+
+    val requestVideoLauncherncher2 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult())
+    {
+
+    }
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -174,40 +202,41 @@ class DiaryActivity : AppCompatActivity(){
         requestGalleryLauncher.launch(intent)
     }
 
-    //gallery request launcher..................
-    val requestGalleryLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult())
-    {
-        try {
-            val calRatio = calculateInSampleSize(
-                it.data!!.data!!,
-                resources.getDimensionPixelSize(R.dimen.imgSize),
-                resources.getDimensionPixelSize(R.dimen.imgSize)
-            )
+        //gallery request launcher..................
+        val requestGalleryLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult())
+        {
+            try {
+                val calRatio = calculateInSampleSize(
+                    it.data!!.data!!,
+                    resources.getDimensionPixelSize(com.android4.travel.R.dimen.imgSize),
+                    resources.getDimensionPixelSize(com.android4.travel.R.dimen.imgSize)
+                )
 
-            val option = BitmapFactory.Options()
-            option.inSampleSize = calRatio
+                val option = BitmapFactory.Options()
+                option.inSampleSize = calRatio
 
-            var inputStream = contentResolver.openInputStream(it.data!!.data!!)
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-            inputStream!!.close()
-            inputStream = null
+                var inputStream = contentResolver.openInputStream(it.data!!.data!!)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+                inputStream!!.close()
+                inputStream = null
 
-            bitmap?.let {
-                binding.GalleryImage.setImageBitmap(bitmap)
-                //이미지 비트맵 -> base64 인코딩 결과 문자열
-                // 프리퍼런스에 저장 테스트
+                bitmap?.let {
+                    binding.GalleryImage.setImageBitmap(bitmap)
+                    //이미지 비트맵 -> base64 인코딩 결과 문자열
+                    // 프리퍼런스에 저장 테스트
 
-                var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
-                binding.imageuri.setText(imgInfo)
+                    var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
+                    binding.imageuri.setText(imgInfo)
 
-            } ?: let{
-                Log.d("test", "bitmap null")
+                } ?: let{
+                    Log.d("test", "bitmap null")
+                }
+            }catch (e: Exception){
+                e.printStackTrace()
             }
-        }catch (e: Exception){
-            e.printStackTrace()
         }
-    }
+
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
         val options = BitmapFactory.Options()
@@ -240,6 +269,7 @@ class DiaryActivity : AppCompatActivity(){
     }
 
 }
+
 
 
 

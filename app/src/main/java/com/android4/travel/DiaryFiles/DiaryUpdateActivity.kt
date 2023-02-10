@@ -125,8 +125,8 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
                     val dno = intent.getIntExtra("dno", 0)
 
-                    //update(dno)
-                    val requestCall: Call<Unit> = networkService.delete(dno)
+                    //update(diary)
+                    val requestCall: Call<Unit> = networkService.update(diary)
                     requestCall.enqueue(object : Callback<Unit> {
                         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                             Toast.makeText(this@DiaryUpdateActivity, "success", Toast.LENGTH_SHORT)

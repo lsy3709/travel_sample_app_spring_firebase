@@ -207,6 +207,15 @@
                     android:layout_weight="1"
                     android:backgroundTint="#619CD6"
                     android:text="여행리뷰"></Button>
+
+                <Button
+                    android:id="@+id/btnMainView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#619CD6"
+                    android:text="메인으로"></Button>
             </LinearLayout>
 
 
@@ -221,16 +230,32 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/GalleryImage"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:scaleType="fitCenter"
+                android:layout_marginRight="10dp"
                 tools:src="@tools:sample/avatars">
 
             </ImageView>
+
+            <VideoView
+                android:id="@+id/VideoImage"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:layout_marginRight="10dp"
+                >
+
+            </VideoView>
+            <VideoView
+                android:id="@+id/VideoImage2"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                >
+
+            </VideoView>
 
         </LinearLayout>
 
@@ -265,9 +290,17 @@
                 android:id="@+id/btnWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#619CD6"
                 android:text="일기작성" />
+            <Button
+                android:id="@+id/btnVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#619CD6"
+                android:text="영상첨부" />
 
             <TextView
                 android:id="@+id/LoginId"
