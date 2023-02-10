@@ -1,17 +1,17 @@
 package com.android4.travel.DiaryFiles
 
+import android.R.attr.data
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.MediaController
 import android.widget.RadioButton
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -193,6 +193,14 @@ class DiaryActivity : AppCompatActivity(){
     val requestVideoLauncherncher2 = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult())
     {
+        val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+
+        binding.VideoImage2.setMediaController(mc)
+
+        val fileUri: Uri = it.data!!.data!!
+        binding.VideoImage2.setVideoPath(fileUri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
+
+        binding.VideoImage2.start() // 비디오뷰 시작
 
     }
 
