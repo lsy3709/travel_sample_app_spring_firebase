@@ -32,7 +32,9 @@ class DiaryAdapter(val context:Context, val datas:List<Diary>?):RecyclerView.Ada
         val diary = datas?.get(position)
 
 
+    // 목록에 연결된 데이터
         binding.listTitleId.text=diary?.title
+         binding.listLoginId.text=diary?.trip_id
         binding.listDateId.text=diary?.date
 
     if(diary?.on_off=="비공개"){

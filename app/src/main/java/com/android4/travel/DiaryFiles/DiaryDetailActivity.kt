@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import com.android4.travel.MainActivity
 import com.android4.travel.R.drawable
 import com.android4.travel.MyApplication
 import com.android4.travel.RegisterActivity
@@ -53,6 +54,11 @@ class DiaryDetailActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        binding.btnMainView.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+
+            startActivity(intent)
+        }
 
         binding.btnUpdate.setOnClickListener {
             val dno = intent.getIntExtra("dno",0)
