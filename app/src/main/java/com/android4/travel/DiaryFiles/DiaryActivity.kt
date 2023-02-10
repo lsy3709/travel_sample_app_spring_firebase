@@ -130,7 +130,8 @@ class DiaryActivity : AppCompatActivity(){
                 hitcount = 0,
                 good = 0,
                 trip_id =binding.LoginId.text.toString(),
-                image_uri = binding.imageuri.text.toString()
+                image_uri = binding.imageuri.text.toString(),
+                video_uri = binding.videouri.text.toString(),
 //                binding.GalleryImage.setImageURI(data?.data).toString()
             )
 
@@ -238,6 +239,7 @@ class DiaryActivity : AppCompatActivity(){
         }
 
         val base64EncodedFile = sb.toString()
+        binding.videouri.setText(base64EncodedFile)
         //Log.d("video",
             //"inputStream -> byteArray -> String 추가 base64EncodedFile 의 값 : "+ base64EncodedFile)
         Log.d("video",

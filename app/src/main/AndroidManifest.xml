@@ -24,9 +24,6 @@
         <activity
             android:name="com.android4.travel.DiaryFiles.DiaryUpdateActivity"
             android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
         <activity
             android:name="com.android4.travel.LoginActivity"
