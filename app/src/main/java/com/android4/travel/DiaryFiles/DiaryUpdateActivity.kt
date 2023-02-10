@@ -10,8 +10,10 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.MediaController
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +28,8 @@ import kotlinx.android.synthetic.main.fragment_diary_cal.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.io.InputStream
 import java.util.*
 
 class DiaryUpdateActivity : AppCompatActivity() {
@@ -35,7 +39,6 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityDiaryUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //프리퍼런스에 저장된 로그인 유저, 중간 저장소로
@@ -100,6 +103,11 @@ class DiaryUpdateActivity : AppCompatActivity() {
             openGallery()
         }
 
+        binding.btnVideo.setOnClickListener{
+            openVideo()
+        }
+
+
         binding.btnUpdate.setOnClickListener {
 
             val dno = intent.getIntExtra("dno", 0)
@@ -118,8 +126,8 @@ class DiaryUpdateActivity : AppCompatActivity() {
                         hitcount = 0,
                         good = 0,
                         trip_id =binding.LoginId.text.toString(),
-                        image_uri = binding.imageuri.text.toString()
-//                binding.GalleryImage.setImageURI(data?.data).toString()
+                        image_uri = binding.imageuri.text.toString(),
+                        video_uri = binding.videouri.text.toString()
                     )
                     val networkService = (applicationContext as MyApplication).networkService
 
@@ -185,6 +193,65 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun openVideo() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "video/*"
+        requestVideoLauncherncher2.launch(intent)
+    }
+
+    val requestVideoLauncherncher2 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult())
+    {
+        val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+
+        binding.VideoImage2.setMediaController(mc)
+
+        val fileUri: Uri = it.data!!.data!!
+        Log.d("video","fileUri: "+fileUri.toString())
+        val file : String = fileUri.toString()
+        Log.d("video","file.length: "+file.length)
+        binding.VideoImage2.setVideoPath(fileUri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
+        binding.VideoImage2.start() // 비디오뷰 시작
+        //var inputStream = contentResolver.openInputStream(it.data!!.data!!)
+        // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+        val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
+        var inputStream : InputStream? = null
+
+        try {
+            inputStream = contentResolver.openInputStream(fileUri)!!
+            // Max size of buffer
+            val bSize = 3 * 512
+            // Buffer
+            val buf = ByteArray(bSize)
+            // Actual size of buffer
+            var len = 0
+            while (inputStream?.read(buf).also {
+                    if (it != null) {
+                        len = it
+                    }
+                } != -1) {
+                val encoded: ByteArray = Base64.encode(buf,0)
+
+                // Although you might want to write the encoded bytes to another
+                // stream, otherwise you'll run into the same problem again.
+                sb.append(String(encoded, 0, len))
+            }
+        } catch (e: IOException) {
+            if (null != inputStream) {
+                inputStream.close()
+            }
+        }
+
+        val base64EncodedFile = sb.toString()
+        binding.videouri.setText(base64EncodedFile)
+        //Log.d("video",
+        //"inputStream -> byteArray -> String 추가 base64EncodedFile 의 값 : "+ base64EncodedFile)
+        Log.d("video",
+            "inputStream -> byteArray -> String 추가 base64EncodedFile 의 length 값 : "+ base64EncodedFile.length)
+
+    }
+
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

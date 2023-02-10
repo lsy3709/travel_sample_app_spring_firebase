@@ -315,6 +315,13 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:visibility="gone"></TextView>
+
+            <TextView
+                android:id="@+id/videouri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"></TextView>
         </LinearLayout>
     </LinearLayout>
 
