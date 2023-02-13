@@ -31,7 +31,7 @@ class DiaryDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityDiaryDetailBinding
 
     private var videoUri: Uri? = null
-    lateinit var filePath: String
+//    lateinit var filePath: String
 
     private fun newVideoFileName(): String {
         val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
@@ -48,16 +48,18 @@ class DiaryDetailActivity : AppCompatActivity() {
         val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
         val listVideo_url = loginSharedPref.getString("video_data", "default")
 
+
         val dno = intent.getIntExtra("dno", 0)
         val title = intent.getStringExtra("listTitle")
         val date = intent.getStringExtra("listDate")
         val content = intent.getStringExtra("listContent")
         val listImage_url = intent.getStringExtra("listImage_url")
-        // val listVideo_url=intent.getStringExtra("listVideo_url")
+        //val listVideo_url=intent.getStringExtra("listVideo_url")
 
 
         if (listImage_url != null && !listImage_url.isBlank()) {
             val imageUri1 = Base64Util.stringToBitMap(listImage_url)
+
             binding.picture1.setImageBitmap(imageUri1)
             binding.picture1.visibility = View.VISIBLE
             binding.picturelabel1.visibility = View.VISIBLE
@@ -65,52 +67,52 @@ class DiaryDetailActivity : AppCompatActivity() {
         if (listVideo_url != null && !listVideo_url.isBlank()) {
 
 
-            val timeStamp: String =
-                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-            val file = File.createTempFile(
-                "MP4_${timeStamp}_",
-                ".mp4",
-                storageDir
-            )
-            filePath = file.absolutePath
-
+//            val timeStamp: String =
+//                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+//            val file = File.createTempFile(
+//                "MP4_${timeStamp}_",
+//                ".mp4",
+//                storageDir
+//            )
+//            filePath = file.absolutePath
+         //   Log.d("video length0 : filePath.toString() : ",filePath.toString())
 //            val photoURI: Uri = FileProvider.getUriForFile(
 //                this,
 //                "com.android4.travel.fileprovider",
 //                file
 //            )
 
-            val videoUri1 = Base64.decode(listVideo_url, 0)
-            Log.d("video length",videoUri1.size.toString())
-            val targetStream: InputStream = ByteArrayInputStream(videoUri1)
-            Log.d("video length2",targetStream.toString())
-
-            try {
-                val buff = ByteArray(1024 * 4)
-                val os: OutputStream = FileOutputStream(file)
-                while (true) {
-                    val readed: Int
-                    readed = targetStream.read(buff);
-
-                    if (readed == -1) {
-                        break;
-                    }
-                    os.write(buff, 0, readed);
-                    //write buff
-//                    downloaded += readed;
-                }
-                os.flush();
-                os.close();
-
-            } catch (e:IOException ) {
-                e.printStackTrace();
-            } finally {
-                if (targetStream != null) {
-                    targetStream.close();
-                }
-            }
-          //   mediaScanner : MediaScanner =  MediaScanner(getApplicationContext(), mediaFile);
+//            val videoUri1 = Base64.decode(listVideo_url, 0)
+//            Log.d("video length1",videoUri1.size.toString())
+//            val targetStream: InputStream = ByteArrayInputStream(videoUri1)
+//            Log.d("video length2",targetStream.toString())
+//
+//            try {
+//                val buff = ByteArray(1024 * 4)
+//                val os: OutputStream = FileOutputStream(file)
+//                while (true) {
+//                    val readed: Int
+//                    readed = targetStream.read(buff);
+//
+//                    if (readed == -1) {
+//                        break;
+//                    }
+//                    os.write(buff, 0, readed);
+//                    //write buff
+////                    downloaded += readed;
+//                }
+//                os.flush();
+//                os.close();
+//
+//            } catch (e:IOException ) {
+//                e.printStackTrace();
+//            } finally {
+//                if (targetStream != null) {
+//                    targetStream.close();
+//                }
+//            }
+       //   mediaScanner : MediaScanner =  MediaScanner(getApplicationContext(), mediaFile);
 
 
 
@@ -122,10 +124,10 @@ class DiaryDetailActivity : AppCompatActivity() {
 //                videoFile
 //            )
 
-
+Log.d("video_test2",listVideo_url.toString())
         val mc = MediaController(this)
         binding.VideoImage2.setMediaController(mc)
-        binding.VideoImage2.setVideoURI(file.toUri())
+        binding.VideoImage2.setVideoURI(listVideo_url.toUri())
         binding.VideoImage2.start()
 
 
