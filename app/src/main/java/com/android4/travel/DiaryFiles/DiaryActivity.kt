@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -25,10 +26,9 @@ import com.android4.travel.model.DiaryListModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DiaryActivity : AppCompatActivity(){
@@ -213,11 +213,60 @@ class DiaryActivity : AppCompatActivity(){
         // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
         val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
         var inputStream : InputStream? = null
-
+        var filePath : String? =""
 
         try {
 
             inputStream = contentResolver.openInputStream(fileUri)!!
+
+            //test 111
+            val timeStamp: String =
+                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+            val file = File.createTempFile(
+                "MP4_${timeStamp}_",
+                ".mp4",
+                storageDir
+            )
+            var filePath = file.absolutePath
+            Log.d("video length0 : filePath.toString() : ",filePath.toString())
+//            val photoURI: Uri = FileProvider.getUriForFile(
+//                this,
+//                "com.android4.travel.fileprovider",
+//                file
+//            )
+
+          //  val videoUri1 = Base64.decode(listVideo_url, 0)
+           // Log.d("video length1",videoUri1.size.toString())
+           // val targetStream: InputStream = ByteArrayInputStream(videoUri1)
+            //Log.d("video length2",targetStream.toString())
+
+            try {
+                val buff = ByteArray(1024 * 4)
+                val os: OutputStream = FileOutputStream(file)
+                while (true) {
+                    val readed: Int
+                    readed = inputStream.read(buff);
+
+                    if (readed == -1) {
+                        break;
+                    }
+                    os.write(buff, 0, readed);
+                    //write buff
+//                    downloaded += readed;
+                }
+                os.flush();
+                os.close();
+
+            } catch (e:IOException ) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            }
+            Log.d("video_test2",file.toString())
+            ////test 111
 
             // Max size of buffer
             val bSize = 8*512
@@ -248,7 +297,7 @@ class DiaryActivity : AppCompatActivity(){
         binding.videouri.setText(base64EncodedFile)
         val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
         loginSharedPref.edit().run {
-            putString("video_data", base64EncodedFile)
+            putString("video_data", file)
             commit()
         }
         //Log.d("video",
