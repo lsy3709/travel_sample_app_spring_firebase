@@ -22,35 +22,6 @@ class Base64Util {
              return BitmapFactory.decodeByteArray(encodeByte,0,encodeByte.size)
          }
 
-         fun videoToBase64(file : String) {
-             // the base64 encoding - acceptable estimation of encoded size
-             // the base64 encoding - acceptable estimation of encoded size
-             val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
 
-             var fin: FileInputStream? = null
-             var inputStream: InputStream? = null
-             try {
-                 fin = FileInputStream("some.file")
-                 // Max size of buffer
-                 val bSize = 3 * 512
-                 // Buffer
-                 val buf = ByteArray(bSize)
-                 // Actual size of buffer
-                 var len = 0
-                 while (fin.read(buf).also { len = it } != -1) {
-                     val encoded: ByteArray = Base64.encode(buf,0)
-
-                     // Although you might want to write the encoded bytes to another
-                     // stream, otherwise you'll run into the same problem again.
-                     sb.append(String(encoded, 0, len))
-                 }
-             } catch (e: IOException) {
-                 if (null != fin) {
-                     fin.close()
-                 }
-             }
-
-             val base64EncodedFile = sb.toString()
-         }
      }
 }
