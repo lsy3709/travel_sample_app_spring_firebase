@@ -112,6 +112,7 @@
                     >
 
                 </VideoView>
+
             </LinearLayout>
                 <TextView
                     android:id="@+id/contentsTextView"

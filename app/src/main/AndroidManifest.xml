@@ -21,6 +21,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Travel"
         android:usesCleartextTraffic="true">
+
+        <!--File Provider Start-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.android4.travel.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--File Provider End-->
+
+
         <activity
             android:name="com.android4.travel.DiaryFiles.DiaryUpdateActivity"
             android:exported="false">

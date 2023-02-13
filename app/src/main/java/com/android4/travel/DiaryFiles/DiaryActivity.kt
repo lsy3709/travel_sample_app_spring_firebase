@@ -1,6 +1,5 @@
 package com.android4.travel.DiaryFiles
 
-import android.R.attr.data
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -26,6 +25,7 @@ import com.android4.travel.model.DiaryListModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
@@ -206,17 +206,21 @@ class DiaryActivity : AppCompatActivity(){
         Log.d("video","fileUri: "+fileUri.toString())
         val file : String = fileUri.toString()
         Log.d("video","file.length: "+file.length)
-        binding.VideoImage2.setVideoPath(fileUri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
+        binding.VideoImage2.setVideoPath(file) // 선택한 비디오 경로 비디오뷰에 셋
         binding.VideoImage2.start() // 비디오뷰 시작
+
         //var inputStream = contentResolver.openInputStream(it.data!!.data!!)
         // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
         val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
         var inputStream : InputStream? = null
 
+
         try {
+
             inputStream = contentResolver.openInputStream(fileUri)!!
+
             // Max size of buffer
-            val bSize = 3 * 512
+            val bSize = 8*512
             // Buffer
             val buf = ByteArray(bSize)
             // Actual size of buffer
@@ -239,7 +243,14 @@ class DiaryActivity : AppCompatActivity(){
         }
 
         val base64EncodedFile = sb.toString()
+//        val base64EncodeFile2 = base64EncodedFile.trim()
+//        val base64EncodeFile3 = base64EncodeFile2.replaceRange(0,base64EncodeFile2.length,"")
         binding.videouri.setText(base64EncodedFile)
+        val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
+        loginSharedPref.edit().run {
+            putString("video_data", base64EncodedFile)
+            commit()
+        }
         //Log.d("video",
             //"inputStream -> byteArray -> String 추가 base64EncodedFile 의 값 : "+ base64EncodedFile)
         Log.d("video",
