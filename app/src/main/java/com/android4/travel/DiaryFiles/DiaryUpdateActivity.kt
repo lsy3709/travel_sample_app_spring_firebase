@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -28,14 +29,15 @@ import kotlinx.android.synthetic.main.fragment_diary_cal.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DiaryUpdateActivity : AppCompatActivity() {
     lateinit var binding: ActivityDiaryUpdateBinding
     val TAG : String = "DiaryUpdateActivity"
     var dateString : String =""
+    var inputStream : InputStream? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +70,16 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         if (listVideo_url != null && !listVideo_url.isBlank()) {
             val uri = Uri.parse(listVideo_url)
-            binding.VideoImage2.setVideoURI(uri)
-            binding.VideoImage2.setOnPreparedListener {
-                    mp -> // 준비 완료되면 비디오 재생
-                mp.start()
-            }
+            val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+
+            binding.VideoImage2.setMediaController(mc)
+            binding.VideoImage2.setVideoPath(uri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
+            binding.VideoImage2.start() // 비디오뷰 시작
+//            binding.VideoImage2.setVideoURI(uri)
+//            binding.VideoImage2.setOnPreparedListener {
+//                    mp -> // 준비 완료되면 비디오 재생
+//                mp.start()
+//            }
         }
 
         //뷰에 숫자 입력시 방법 아래 샘플.
@@ -120,6 +127,58 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         binding.btnUpdate.setOnClickListener {
 
+            try {
+                val timeStamp: String =
+                    SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                val file2 = File.createTempFile(
+                    "MP4_${timeStamp}_",
+                    ".mp4",
+                    storageDir
+                )
+                var filePath = file2.absolutePath
+                Log.d("file2 filePath.toString() :4=================== ",filePath.toString())
+
+                try {
+                    val buff = ByteArray(1024 * 8)
+                    val os: OutputStream = FileOutputStream(file2)
+                    while (true) {
+                        val readed: Int
+                        readed = inputStream!!.read(buff);
+
+                        if (readed == -1) {
+                            break;
+                        }
+                        os.write(buff, 0, readed);
+                        //write buff
+//                    downloaded += readed;
+                    }
+                    os.flush();
+                    os.close();
+
+                } catch (e: IOException) {
+                    e.printStackTrace();
+                } finally {
+                    inputStream?.close()
+                }
+
+
+                ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
+//////////////////////////////////////////////////////////////////
+                //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
+                // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
+                binding.videouri.setText(filePath)
+                val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
+                loginSharedPref.edit().run {
+                    // putString("base64EncodedFile", base64EncodedFile)
+                    putString("filePath2", filePath)
+                    commit()
+                }
+
+
+            } catch (e: IOException) {
+
+            }
             val dno = intent.getIntExtra("dno", 0)
             AlertDialog.Builder(this)
                 .setTitle("일기 수정")
@@ -223,42 +282,11 @@ class DiaryUpdateActivity : AppCompatActivity() {
         Log.d("video","file.length: "+file.length)
         binding.VideoImage2.setVideoPath(fileUri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
         binding.VideoImage2.start() // 비디오뷰 시작
+
+        inputStream = contentResolver.openInputStream(fileUri)!!
         //var inputStream = contentResolver.openInputStream(it.data!!.data!!)
         // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-        val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
-        var inputStream : InputStream? = null
 
-        try {
-            inputStream = contentResolver.openInputStream(fileUri)!!
-            // Max size of buffer
-            val bSize = 3 * 512
-            // Buffer
-            val buf = ByteArray(bSize)
-            // Actual size of buffer
-            var len = 0
-            while (inputStream?.read(buf).also {
-                    if (it != null) {
-                        len = it
-                    }
-                } != -1) {
-                val encoded: ByteArray = Base64.encode(buf,0)
-
-                // Although you might want to write the encoded bytes to another
-                // stream, otherwise you'll run into the same problem again.
-                sb.append(String(encoded, 0, len))
-            }
-        } catch (e: IOException) {
-            if (null != inputStream) {
-                inputStream.close()
-            }
-        }
-
-        val base64EncodedFile = sb.toString()
-        binding.videouri.setText(base64EncodedFile)
-        //Log.d("video",
-        //"inputStream -> byteArray -> String 추가 base64EncodedFile 의 값 : "+ base64EncodedFile)
-        Log.d("video",
-            "inputStream -> byteArray -> String 추가 base64EncodedFile 의 length 값 : "+ base64EncodedFile.length)
 
     }
 
