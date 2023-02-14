@@ -35,6 +35,7 @@ class DiaryActivity : AppCompatActivity(){
     lateinit var binding: ActivityDiaryBinding
     //lateinit var filePath: String
     val TAG : String = "DiaryActivity"
+    var inputStream : InputStream? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,6 +122,59 @@ class DiaryActivity : AppCompatActivity(){
 
         binding.btnWrite.setOnClickListener {
 
+            try {
+                val timeStamp: String =
+                    SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                val file2 = File.createTempFile(
+                    "MP4_${timeStamp}_",
+                    ".mp4",
+                    storageDir
+                )
+                var filePath = file2.absolutePath
+                Log.d("file2 filePath.toString() :4=================== ",filePath.toString())
+
+                try {
+                    val buff = ByteArray(1024 * 8)
+                    val os: OutputStream = FileOutputStream(file2)
+                    while (true) {
+                        val readed: Int
+                        readed = inputStream!!.read(buff);
+
+                        if (readed == -1) {
+                            break;
+                        }
+                        os.write(buff, 0, readed);
+                        //write buff
+//                    downloaded += readed;
+                    }
+                    os.flush();
+                    os.close();
+
+                } catch (e: IOException) {
+                    e.printStackTrace();
+                } finally {
+                    inputStream?.close()
+                }
+
+
+                ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
+//////////////////////////////////////////////////////////////////
+                //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
+                // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
+                binding.videouri.setText(filePath)
+                val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
+                loginSharedPref.edit().run {
+                    // putString("base64EncodedFile", base64EncodedFile)
+                    putString("filePath2", filePath)
+                    commit()
+                }
+
+
+            } catch (e: IOException) {
+
+            }
+
             var diary= Diary(
                 dno =0,
                 title =binding.titleId.text.toString(),
@@ -189,6 +243,7 @@ class DiaryActivity : AppCompatActivity(){
         }
     }
 
+    //샘플 비디오 관련 메서드
     private fun openVideo() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "video/*"
@@ -210,110 +265,11 @@ class DiaryActivity : AppCompatActivity(){
         binding.VideoImage2.setVideoPath(file) // 선택한 비디오 경로 비디오뷰에 셋
         binding.VideoImage2.start() // 비디오뷰 시작
 
-        //var inputStream = contentResolver.openInputStream(it.data!!.data!!)
-        // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-        //////////////////////////////////////////////////////////////////
-        var inputStream : InputStream? = null
+        inputStream = contentResolver.openInputStream(fileUri)!!
 
-        try {
-            inputStream = contentResolver.openInputStream(fileUri)!!
 
-            //test 111
-            val timeStamp: String =
-                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-            val file2 = File.createTempFile(
-                "MP4_${timeStamp}_",
-                ".mp4",
-                storageDir
-            )
-            var filePath = file2.absolutePath
-            Log.d("file2 filePath.toString() :4=================== ",filePath.toString())
-//            val photoURI: Uri = FileProvider.getUriForFile(
-//                this,
-//                "com.android4.travel.fileprovider",
-//                file
-//            )
 
-          //  val videoUri1 = Base64.decode(listVideo_url, 0)
-           // Log.d("video length1",videoUri1.size.toString())
-           // val targetStream: InputStream = ByteArrayInputStream(videoUri1)
-            //Log.d("video length2",targetStream.toString())
 
-            try {
-                val buff = ByteArray(1024 * 8)
-                val os: OutputStream = FileOutputStream(file2)
-                while (true) {
-                    val readed: Int
-                    readed = inputStream.read(buff);
-
-                    if (readed == -1) {
-                        break;
-                    }
-                    os.write(buff, 0, readed);
-                    //write buff
-//                    downloaded += readed;
-                }
-                os.flush();
-                os.close();
-
-            } catch (e:IOException ) {
-                e.printStackTrace();
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
-
-            Log.d("video_test2",file)
-            ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
-//////////////////////////////////////////////////////////////////
-            //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
-           // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
-            binding.videouri.setText(filePath)
-            val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
-            loginSharedPref.edit().run {
-               // putString("base64EncodedFile", base64EncodedFile)
-                putString("filePath2", filePath)
-                commit()
-            }
-            // Max size of buffer
-//            val bSize = 8*512
-//            // Buffer
-//            val buf = ByteArray(bSize)
-//            // Actual size of buffer
-//            var len = 0
-//            while (inputStream?.read(buf).also {
-//                    if (it != null) {
-//                        len = it
-//                    }
-//                } != -1) {
-//                val encoded: ByteArray = Base64.encode(buf,0)
-//
-//                // Although you might want to write the encoded bytes to another
-//                // stream, otherwise you'll run into the same problem again.
-//                sb.append(String(encoded, 0, len))
-//            }
-        } catch (e: IOException) {
-//            if (null != inputStream) {
-//                inputStream.close()
-//            }
-        }
-
-       // val base64EncodedFile = sb.toString()
-//        val base64EncodeFile2 = base64EncodedFile.trim()
-//        val base64EncodeFile3 = base64EncodeFile2.replaceRange(0,base64EncodeFile2.length,"")
-//        binding.videouri.setText(base64EncodedFile)
-//        val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
-//        loginSharedPref.edit().run {
-//            putString("video_data", file)
-//            commit()
-//        }
-        //Log.d("video",
-            //"inputStream -> byteArray -> String 추가 base64EncodedFile 의 값 : "+ base64EncodedFile)
-//        Log.d("video",
-//            "inputStream -> byteArray -> String 추가 base64EncodedFile 의 length 값 : "+ base64EncodedFile.length)
-//////////////////////////////////////////////////////////////////
     }
 
     private fun openGallery() {

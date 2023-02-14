@@ -76,7 +76,8 @@
             android:id="@+id/picturelabel1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Image"
+            android:text="업로드 사진 및 동영상"
+            android:gravity="center"
             android:visibility="visible"
             android:textSize="18sp"/>
 
@@ -98,16 +99,16 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/picture1"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/sea"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="30dp"
                     android:visibility="visible"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="10dp" />
 
                 <VideoView
                     android:id="@+id/VideoImage2"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="150dp"
                     >
 

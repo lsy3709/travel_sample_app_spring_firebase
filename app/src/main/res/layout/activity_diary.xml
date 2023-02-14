@@ -236,11 +236,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="샘플사진"
                     android:gravity="center"
-                    android:textAlignment="center"
                     android:visibility="visible"></TextView>
             <ImageView
                 android:id="@+id/GalleryImage"
@@ -256,11 +255,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="샘플영상"
                     android:gravity="center"
-                    android:textAlignment="center"
+                    android:text="샘플영상"
                     android:visibility="visible"></TextView>
             <VideoView
                 android:id="@+id/VideoImage"
@@ -276,11 +274,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="업로드영상"
                     android:gravity="center"
-                    android:textAlignment="center"
                     android:visibility="visible"></TextView>
             <VideoView
                 android:id="@+id/VideoImage2"

@@ -51,6 +51,7 @@ class DiaryUpdateActivity : AppCompatActivity() {
         val date = intent.getStringExtra("listDate")
         val content = intent.getStringExtra("listContent")
         val listImage_url = intent.getStringExtra("listImage_url")
+        val listVideo_url=intent.getStringExtra("listVideo_url")
 //        Log.d(TAG,"1======시작시---dno 의 값 : $dno")
 //        Log.d(TAG,"1======시작시---title 의 값 : $title")
 //        Log.d(TAG,"1======시작시---date 의 값 : $date")
@@ -63,6 +64,15 @@ class DiaryUpdateActivity : AppCompatActivity() {
             binding.picture1.setImageBitmap(imageUri1)
             binding.picture1.visibility = View.VISIBLE
             binding.picturelabel1.visibility = View.VISIBLE
+        }
+
+        if (listVideo_url != null && !listVideo_url.isBlank()) {
+            val uri = Uri.parse(listVideo_url)
+            binding.VideoImage2.setVideoURI(uri)
+            binding.VideoImage2.setOnPreparedListener {
+                    mp -> // 준비 완료되면 비디오 재생
+                mp.start()
+            }
         }
 
         //뷰에 숫자 입력시 방법 아래 샘플.
