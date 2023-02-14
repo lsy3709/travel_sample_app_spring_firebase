@@ -71,8 +71,6 @@ class DiaryDetailActivity : AppCompatActivity() {
         // 앱 내부 프리퍼런스에 임시로 저장해서 불러오기 테스트
         val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
         val listVideo_url = loginSharedPref.getString("video_data", "default")
-        val filePath2 = loginSharedPref.getString("filePath2", "default")
-        val file2 = loginSharedPref.getString("file2", "default")
 
 
         val dno = intent.getIntExtra("dno", 0)
@@ -91,6 +89,11 @@ class DiaryDetailActivity : AppCompatActivity() {
             binding.picturelabel1.visibility = View.VISIBLE
         }
         if (listVideo_url != null && !listVideo_url.isBlank()) {
+
+
+//camera request launcher.................
+
+
 //            val timeStamp: String =
 //                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 //            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
@@ -99,26 +102,77 @@ class DiaryDetailActivity : AppCompatActivity() {
 //                ".mp4",
 //                storageDir
 //            )
-//            var filePath = file.absolutePath
-//            if (listImage_url != null) {
-//                Base64Util.Base64Tomp4(listImage_url,filePath)
-//            }
-//            Log.d("filePath===========",filePath.toString())
-            val uri = Uri.parse(filePath2)
-            if (filePath2 != null) {
-                Log.d("filePath55===========",filePath2)
-            }
-            binding.VideoImage2.setVideoURI(uri)
-// 비디오 뷰 테스트
-            binding.VideoImage2.setOnPreparedListener {
-                    mp -> // 준비 완료되면 비디오 재생
-                mp.start()
-            }
-        }
+//            filePath = file.absolutePath
+         //   Log.d("video length0 : filePath.toString() : ",filePath.toString())
+//            val photoURI: Uri = FileProvider.getUriForFile(
+//                this,
+//                "com.android4.travel.fileprovider",
+//                file
+//            )
 
-            binding.listTitleId1.setText(title)
-            binding.listDateId1.setText(date)
-            binding.contentsTextView.setText(content)
+//            val videoUri1 = Base64.decode(listVideo_url, 0)
+//            Log.d("video length1",videoUri1.size.toString())
+//            val targetStream: InputStream = ByteArrayInputStream(videoUri1)
+//            Log.d("video length2",targetStream.toString())
+//
+//            try {
+//                val buff = ByteArray(1024 * 4)
+//                val os: OutputStream = FileOutputStream(file)
+//                while (true) {
+//                    val readed: Int
+//                    readed = targetStream.read(buff);
+//
+//                    if (readed == -1) {
+//                        break;
+//                    }
+//                    os.write(buff, 0, readed);
+//                    //write buff
+////                    downloaded += readed;
+//                }
+//                os.flush();
+//                os.close();
+//
+//            } catch (e:IOException ) {
+//                e.printStackTrace();
+//            } finally {
+//                if (targetStream != null) {
+//                    targetStream.close();
+//                }
+//            }
+       //   mediaScanner : MediaScanner =  MediaScanner(getApplicationContext(), mediaFile);
+
+
+
+
+
+//            videoUri = FileProvider.getUriForFile(
+//                this,
+//                "com.android4.travel.fileprovider",
+//                videoFile
+//            )
+
+Log.d("video_test2",listVideo_url.toString())
+       // val mc = MediaController(this)
+        //binding.VideoImage2.setMediaController(mc)
+            //binding.VideoImage2.start()
+
+//        binding.VideoImage2.setVideoURI(listVideo_url.toUri())
+//            binding.VideoImage2.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+//                mp: MediaPlayer? ->  mp?.start();
+//            })
+
+
+
+    }
+
+//        fun stringToVideo(base64: String?) : InputStream {
+//            val decoded: ByteArray = Base64.decode(base64,0)
+//            return
+//        }
+
+    binding.listTitleId1.setText(title)
+    binding.listDateId1.setText(date)
+    binding.contentsTextView.setText(content)
 
 
 
