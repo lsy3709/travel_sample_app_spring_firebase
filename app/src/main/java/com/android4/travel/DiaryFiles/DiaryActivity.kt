@@ -213,12 +213,9 @@ class DiaryActivity : AppCompatActivity(){
         //var inputStream = contentResolver.openInputStream(it.data!!.data!!)
         // val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
         //////////////////////////////////////////////////////////////////
-        val sb: StringBuilder = StringBuilder(file.length / 3 * 4)
         var inputStream : InputStream? = null
-        var filePath : String? =""
 
         try {
-
             inputStream = contentResolver.openInputStream(fileUri)!!
 
             //test 111
@@ -275,9 +272,8 @@ class DiaryActivity : AppCompatActivity(){
             binding.videouri.setText(base64EncodedFile)
             val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
             loginSharedPref.edit().run {
-                putString("video_data", base64EncodedFile)
+                putString("base64EncodedFile", base64EncodedFile)
                 putString("filePath2", filePath)
-                putString("file2", file)
                 commit()
             }
             // Max size of buffer

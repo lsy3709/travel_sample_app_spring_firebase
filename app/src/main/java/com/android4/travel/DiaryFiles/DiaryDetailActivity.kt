@@ -37,31 +37,6 @@ class DiaryDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityDiaryDetailBinding
 
     private var videoUri: Uri? = null
-//    lateinit var filePath: String
-
-    private fun newVideoFileName(): String {
-        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
-        val filename = sdf.format(System.currentTimeMillis())
-        return "${filename}.mp4"
-    }
-
-    private fun openVideo() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "video/*"
-        requestVideoLauncherncher2.launch(intent)
-    }
-
-    val requestVideoLauncherncher2 = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult())
-    {
-        val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
-
-        binding.VideoImage2.setMediaController(mc)
-        val fileUri: Uri = it.data!!.data!!
-        val file : String = fileUri.toString()
-        binding.VideoImage2.setVideoPath(file)
-        binding.VideoImage2.start() // 비디오뷰 시작
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +46,9 @@ class DiaryDetailActivity : AppCompatActivity() {
         // 앱 내부 프리퍼런스에 임시로 저장해서 불러오기 테스트
         val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
         val listVideo_url = loginSharedPref.getString("video_data", "default")
+        //임시로 앱 내부에 파일 쓰기한 위치의 Uri 위치.
         val filePath2 = loginSharedPref.getString("filePath2", "default")
-        val file2 = loginSharedPref.getString("file2", "default")
+
 
 
         val dno = intent.getIntExtra("dno", 0)
@@ -91,22 +67,22 @@ class DiaryDetailActivity : AppCompatActivity() {
             binding.picturelabel1.visibility = View.VISIBLE
         }
         if (listVideo_url != null && !listVideo_url.isBlank()) {
-//            val timeStamp: String =
-//                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-//            val file = File.createTempFile(
-//                "MP4_${timeStamp}_",
-//                ".mp4",
-//                storageDir
-//            )
-//            var filePath = file.absolutePath
-//            if (listImage_url != null) {
-//                Base64Util.Base64Tomp4(listImage_url,filePath)
-//            }
-//            Log.d("filePath===========",filePath.toString())
-            val uri = Uri.parse(filePath2)
-            if (filePath2 != null) {
-                Log.d("filePath55===========",filePath2)
+            val timeStamp: String =
+                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+            val file3 = File.createTempFile(
+                "MP4_${timeStamp}_",
+                ".mp4",
+                storageDir
+            )
+            var filePath3 = file3.absolutePath
+
+                Base64Util.Base64Tomp4(listVideo_url,filePath3)
+
+            Log.d("filePath===========",filePath3.toString())
+            val uri = Uri.parse(filePath3)
+            if (filePath3 != null) {
+                Log.d("filePath55===========",filePath3)
             }
             binding.VideoImage2.setVideoURI(uri)
 // 비디오 뷰 테스트
