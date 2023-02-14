@@ -268,11 +268,12 @@ class DiaryActivity : AppCompatActivity(){
             Log.d("video_test2",file)
             ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
 //////////////////////////////////////////////////////////////////
-            val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
-            binding.videouri.setText(base64EncodedFile)
+            //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
+           // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
+            binding.videouri.setText(filePath)
             val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
             loginSharedPref.edit().run {
-                putString("base64EncodedFile", base64EncodedFile)
+               // putString("base64EncodedFile", base64EncodedFile)
                 putString("filePath2", filePath)
                 commit()
             }
