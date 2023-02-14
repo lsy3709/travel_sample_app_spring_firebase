@@ -67,29 +67,21 @@ class DiaryDetailActivity : AppCompatActivity() {
             binding.picturelabel1.visibility = View.VISIBLE
         }
         if (listVideo_url != null && !listVideo_url.isBlank()) {
-//            val timeStamp: String =
-//                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//            val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-//            val file3 = File.createTempFile(
-//                "MP4_${timeStamp}_",
-//                ".mp4",
-//                storageDir
-//            )
-//            var filePath3 = file3.absolutePath
-//
-//                Base64Util.Base64Tomp4(listVideo_url,filePath3)
-//
-//            Log.d("filePath===========",filePath3.toString())
+
             val uri = Uri.parse(listVideo_url)
-            if (listVideo_url != null) {
-                Log.d("filePath55===========",listVideo_url)
-            }
-            binding.VideoImage2.setVideoURI(uri)
-// 비디오 뷰 테스트
-            binding.VideoImage2.setOnPreparedListener {
-                    mp -> // 준비 완료되면 비디오 재생
-                mp.start()
-            }
+
+            val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+
+            binding.VideoImage2.setMediaController(mc)
+            binding.VideoImage2.setVideoPath(uri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
+            binding.VideoImage2.start() // 비디오뷰 시작
+
+//            binding.VideoImage2.setVideoURI(uri)
+//// 비디오 뷰 테스트
+//            binding.VideoImage2.setOnPreparedListener {
+//                    mp -> // 준비 완료되면 비디오 재생
+//                mp.start()
+//            }
         }
 
             binding.listTitleId1.setText(title)
