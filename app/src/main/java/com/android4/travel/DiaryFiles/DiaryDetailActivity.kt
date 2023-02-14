@@ -115,6 +115,7 @@ class DiaryDetailActivity : AppCompatActivity() {
             val date=intent.getStringExtra("listDate")
             val content=intent.getStringExtra("listContent")
             val listImage_url=intent.getStringExtra("listImage_url")
+            val listVideo_url=intent.getStringExtra("listVideo_url")
 
             val intent = Intent(this, DiaryUpdateActivity::class.java)
             intent.putExtra("dno",dno)
@@ -122,6 +123,7 @@ class DiaryDetailActivity : AppCompatActivity() {
             intent.putExtra("listDate",date)
             intent.putExtra("listContent",content)
             intent.putExtra("listImage_url", listImage_url )
+            intent.putExtra("listVideo_url", listVideo_url )
             startActivity(intent)
 
         }
