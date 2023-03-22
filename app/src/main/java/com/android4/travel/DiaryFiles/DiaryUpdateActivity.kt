@@ -38,6 +38,9 @@ class DiaryUpdateActivity : AppCompatActivity() {
     val TAG : String = "DiaryUpdateActivity"
     var dateString : String =""
     var inputStream : InputStream? = null
+    var status_img: Int = 0
+    var status_video: Int = 0
+    var diary : Diary? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,9 @@ class DiaryUpdateActivity : AppCompatActivity() {
             binding.picture1.setImageBitmap(imageUri1)
             binding.picture1.visibility = View.VISIBLE
             binding.picturelabel1.visibility = View.VISIBLE
+            var imgInfo :String = Base64Util.bitMapToBase64(imageUri1)
+            binding.imageuri.setText(imgInfo)
+            status_img = 1
         }
 
         if (listVideo_url != null && !listVideo_url.isBlank()) {
@@ -75,6 +81,8 @@ class DiaryUpdateActivity : AppCompatActivity() {
             binding.VideoImage2.setMediaController(mc)
             binding.VideoImage2.setVideoPath(uri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
             binding.VideoImage2.start() // 비디오뷰 시작
+
+            status_video = 1
 //            binding.VideoImage2.setVideoURI(uri)
 //            binding.VideoImage2.setOnPreparedListener {
 //                    mp -> // 준비 완료되면 비디오 재생
@@ -127,57 +135,59 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
         binding.btnUpdate.setOnClickListener {
 
-            try {
-                val timeStamp: String =
-                    SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                val file2 = File.createTempFile(
-                    "MP4_${timeStamp}_",
-                    ".mp4",
-                    storageDir
-                )
-                var filePath = file2.absolutePath
-                Log.d("file2 filePath.toString() :4=================== ",filePath.toString())
-
+            if(inputStream != null) {
                 try {
-                    val buff = ByteArray(1024 * 8)
-                    val os: OutputStream = FileOutputStream(file2)
-                    while (true) {
-                        val readed: Int
-                        readed = inputStream!!.read(buff);
+                    val timeStamp: String =
+                        SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                    val file2 = File.createTempFile(
+                        "MP4_${timeStamp}_",
+                        ".mp4",
+                        storageDir
+                    )
+                    var filePath = file2.absolutePath
+                    Log.d("file2 filePath.toString() :4=================== ", filePath.toString())
 
-                        if (readed == -1) {
-                            break;
-                        }
-                        os.write(buff, 0, readed);
-                        //write buff
+                    try {
+                        val buff = ByteArray(1024 * 8)
+                        val os: OutputStream = FileOutputStream(file2)
+                        while (true) {
+                            val readed: Int
+                            readed = inputStream!!.read(buff);
+
+                            if (readed == -1) {
+                                break;
+                            }
+                            os.write(buff, 0, readed);
+                            //write buff
 //                    downloaded += readed;
+                        }
+                        os.flush();
+                        os.close();
+
+                    } catch (e: IOException) {
+                        e.printStackTrace();
+                    } finally {
+                        inputStream?.close()
                     }
-                    os.flush();
-                    os.close();
+
+
+                    ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
+//////////////////////////////////////////////////////////////////
+                    //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
+                    // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
+                    binding.videouri.setText(filePath)
+                    val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
+                    loginSharedPref.edit().run {
+                        // putString("base64EncodedFile", base64EncodedFile)
+                        putString("filePath2", filePath)
+                        commit()
+                    }
+
 
                 } catch (e: IOException) {
-                    e.printStackTrace();
-                } finally {
-                    inputStream?.close()
+
                 }
-
-
-                ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
-//////////////////////////////////////////////////////////////////
-                //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
-                // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
-                binding.videouri.setText(filePath)
-                val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
-                loginSharedPref.edit().run {
-                    // putString("base64EncodedFile", base64EncodedFile)
-                    putString("filePath2", filePath)
-                    commit()
-                }
-
-
-            } catch (e: IOException) {
-
             }
             val dno = intent.getIntExtra("dno", 0)
             AlertDialog.Builder(this)
@@ -186,24 +196,40 @@ class DiaryUpdateActivity : AppCompatActivity() {
                 .setIcon(android.R.drawable.btn_star_big_on)
                 .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                     // "예"를 선택했을 때의 Action
-                    var diary= Diary(
-                        dno =dno,
-                        title =binding.listTitleId1.text.toString(),
-                        content =binding.contentsTextView.text.toString(),
-                        date =binding.listDateId1.text.toString(),
-                        on_off =binding.rsCheck.text.toString(),
-                        hitcount = 0,
-                        good = 0,
-                        trip_id =binding.LoginId.text.toString(),
-                        image_uri = binding.imageuri.text.toString(),
-                        video_uri = binding.videouri.text.toString()
-                    )
+                    if(status_img == 1 && status_video == 1){
+                        diary= Diary(
+                            dno =dno,
+                            title =binding.listTitleId1.text.toString(),
+                            content =binding.contentsTextView.text.toString(),
+                            date =binding.listDateId1.text.toString(),
+                            on_off =binding.rsCheck.text.toString(),
+                            hitcount = 0,
+                            good = 0,
+                            trip_id =binding.LoginId.text.toString(),
+                            image_uri = binding.imageuri.text.toString(),
+                            video_uri = binding.videouri.text.toString()
+                        )
+                    } else {
+                        diary= Diary(
+                            dno =dno,
+                            title =binding.listTitleId1.text.toString(),
+                            content =binding.contentsTextView.text.toString(),
+                            date =binding.listDateId1.text.toString(),
+                            on_off =binding.rsCheck.text.toString(),
+                            hitcount = 0,
+                            good = 0,
+                            trip_id =binding.LoginId.text.toString(),
+                            image_uri = binding.imageuri.text.toString(),
+                            video_uri = binding.videouri.text.toString()
+                        )
+                    }
+
                     val networkService = (applicationContext as MyApplication).networkService
 
                     val dno = intent.getIntExtra("dno", 0)
 
                     //update(diary)
-                    val requestCall: Call<Unit> = networkService.update(diary)
+                    val requestCall: Call<Unit> = networkService.update(diary!!)
                     requestCall.enqueue(object : Callback<Unit> {
                         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                             Toast.makeText(this@DiaryUpdateActivity, "success", Toast.LENGTH_SHORT)

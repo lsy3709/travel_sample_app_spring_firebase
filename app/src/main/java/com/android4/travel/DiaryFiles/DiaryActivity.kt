@@ -122,57 +122,59 @@ class DiaryActivity : AppCompatActivity(){
 
         binding.btnWrite.setOnClickListener {
 
-            try {
-                val timeStamp: String =
-                    SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                val file2 = File.createTempFile(
-                    "MP4_${timeStamp}_",
-                    ".mp4",
-                    storageDir
-                )
-                var filePath = file2.absolutePath
-                Log.d("file2 filePath.toString() :4=================== ",filePath.toString())
-
+            if(inputStream != null) {
                 try {
-                    val buff = ByteArray(1024 * 8)
-                    val os: OutputStream = FileOutputStream(file2)
-                    while (true) {
-                        val readed: Int
-                        readed = inputStream!!.read(buff);
+                    val timeStamp: String =
+                        SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                    val file2 = File.createTempFile(
+                        "MP4_${timeStamp}_",
+                        ".mp4",
+                        storageDir
+                    )
+                    var filePath = file2.absolutePath
+                    Log.d("file2 filePath.toString() :4=================== ", filePath.toString())
 
-                        if (readed == -1) {
-                            break;
-                        }
-                        os.write(buff, 0, readed);
-                        //write buff
+                    try {
+                        val buff = ByteArray(1024 * 8)
+                        val os: OutputStream = FileOutputStream(file2)
+                        while (true) {
+                            val readed: Int
+                            readed = inputStream!!.read(buff);
+
+                            if (readed == -1) {
+                                break;
+                            }
+                            os.write(buff, 0, readed);
+                            //write buff
 //                    downloaded += readed;
+                        }
+                        os.flush();
+                        os.close();
+
+                    } catch (e: IOException) {
+                        e.printStackTrace();
+                    } finally {
+                        inputStream?.close()
                     }
-                    os.flush();
-                    os.close();
+
+
+                    ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
+//////////////////////////////////////////////////////////////////
+                    //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
+                    // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
+                    binding.videouri.setText(filePath)
+                    val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
+                    loginSharedPref.edit().run {
+                        // putString("base64EncodedFile", base64EncodedFile)
+                        putString("filePath2", filePath)
+                        commit()
+                    }
+
 
                 } catch (e: IOException) {
-                    e.printStackTrace();
-                } finally {
-                    inputStream?.close()
+
                 }
-
-
-                ////test 111 filePath.toString()  ㅎㅐ당 경로에 파일 쓰기. 잘됨.
-//////////////////////////////////////////////////////////////////
-                //base64 인코딩 테스트 완료. 주석. 해당 내용 디비에 저장시 많이 느림.
-                // val base64EncodedFile = Base64Util.mp4ToBase64(filePath)
-                binding.videouri.setText(filePath)
-                val loginSharedPref = getSharedPreferences("video_data", Context.MODE_PRIVATE)
-                loginSharedPref.edit().run {
-                    // putString("base64EncodedFile", base64EncodedFile)
-                    putString("filePath2", filePath)
-                    commit()
-                }
-
-
-            } catch (e: IOException) {
-
             }
 
             var diary= Diary(
