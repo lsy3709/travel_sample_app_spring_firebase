@@ -82,6 +82,8 @@ class DiaryUpdateActivity : AppCompatActivity() {
             binding.VideoImage2.setVideoPath(uri.toString()) // 선택한 비디오 경로 비디오뷰에 셋
             binding.VideoImage2.start() // 비디오뷰 시작
 
+            binding.videouri.setText(listVideo_url)
+
             status_video = 1
 //            binding.VideoImage2.setVideoURI(uri)
 //            binding.VideoImage2.setOnPreparedListener {
