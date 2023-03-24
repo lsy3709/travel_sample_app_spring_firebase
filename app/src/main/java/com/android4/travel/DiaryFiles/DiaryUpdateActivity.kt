@@ -358,7 +358,7 @@ class DiaryUpdateActivity : AppCompatActivity() {
             inputStream = null
 
             bitmap?.let {
-                binding.picture1.setImageBitmap(thumbnailBitmap)
+                binding.picture1.setImageBitmap(bitmap)
                 //이미지 비트맵 -> base64 인코딩 결과 문자열
                 // 프리퍼런스에 저장 테스트
 

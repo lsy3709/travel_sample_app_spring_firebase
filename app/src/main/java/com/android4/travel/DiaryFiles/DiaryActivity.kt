@@ -334,7 +334,7 @@ class DiaryActivity : AppCompatActivity(){
 //                    Glide.with(this)
 //                        .load(thumbnailBitmap)
 //                        .into(binding.GalleryImage);
-                    binding.GalleryImage.setImageBitmap(thumbnailBitmap)
+                    binding.GalleryImage.setImageBitmap(bitmap)
                     //이미지 비트맵 -> base64 인코딩 결과 문자열
                     // 프리퍼런스에 저장 테스트
 
