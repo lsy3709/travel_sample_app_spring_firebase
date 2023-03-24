@@ -1,13 +1,14 @@
 package com.android4.travel.DiaryFiles
 
+import android.R
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.MediaController
@@ -23,6 +24,8 @@ import com.android4.travel.adapter.DiaryAdapter
 import com.android4.travel.databinding.ActivityDiaryBinding
 import com.android4.travel.model.Diary
 import com.android4.travel.model.DiaryListModel
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +39,7 @@ class DiaryActivity : AppCompatActivity(){
     //lateinit var filePath: String
     val TAG : String = "DiaryActivity"
     var inputStream : InputStream? = null
+    var inputStream2 : InputStream? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -296,15 +300,45 @@ class DiaryActivity : AppCompatActivity(){
 
                 var inputStream = contentResolver.openInputStream(it.data!!.data!!)
                 val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+
+                val thumbnailSize = 100 // set the desired thumbnail size in pixels
+
+//                val originalBitmap = BitmapFactory.decodeResource(
+//                    resources,
+//                    R.drawable.my_image
+//                ) // load the original Bitmap
+
+                val thumbnailBitmap = bitmap?.let { it1 ->
+                    Bitmap.createScaledBitmap(
+                        it1,
+                        thumbnailSize,
+                        thumbnailSize,
+                        false
+                    )
+                } // create the thumbnail Bitmap
+
+
+//                val outputStream = ByteArrayOutputStream()
+//                if (bitmap != null) {
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, outputStream)
+//                }
+//                val bitmapData = outputStream.toByteArray()
+//
+//                inputStream2 = ByteArrayInputStream(bitmapData)
+//                val bitmap2 = BitmapFactory.decodeStream(inputStream2, null, option)
+
                 inputStream!!.close()
                 inputStream = null
 
                 bitmap?.let {
-                    binding.GalleryImage.setImageBitmap(bitmap)
+//                    Glide.with(this)
+//                        .load(thumbnailBitmap)
+//                        .into(binding.GalleryImage);
+                    binding.GalleryImage.setImageBitmap(thumbnailBitmap)
                     //이미지 비트맵 -> base64 인코딩 결과 문자열
                     // 프리퍼런스에 저장 테스트
 
-                    var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
+                    var imgInfo :String = Base64Util.bitMapToBase64(thumbnailBitmap)
                     binding.imageuri.setText(imgInfo)
 
                 } ?: let{
