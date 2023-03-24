@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -341,15 +342,27 @@ class DiaryUpdateActivity : AppCompatActivity() {
 
             var inputStream = contentResolver.openInputStream(it.data!!.data!!)
             val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+
+            val thumbnailSize = 100 // set the desired thumbnail size in pixels
+
+            val thumbnailBitmap = bitmap?.let { it1 ->
+                Bitmap.createScaledBitmap(
+                    it1,
+                    thumbnailSize,
+                    thumbnailSize,
+                    false
+                )
+            } // create the thumbnail Bitmap
+
             inputStream!!.close()
             inputStream = null
 
             bitmap?.let {
-                binding.picture1.setImageBitmap(bitmap)
+                binding.picture1.setImageBitmap(thumbnailBitmap)
                 //이미지 비트맵 -> base64 인코딩 결과 문자열
                 // 프리퍼런스에 저장 테스트
 
-                var imgInfo :String = Base64Util.bitMapToBase64(bitmap)
+                var imgInfo :String = Base64Util.bitMapToBase64(thumbnailBitmap)
                 binding.imageuri.setText(imgInfo)
 
             } ?: let{
