@@ -10,9 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.android4.travel.MyApplication_FB.Companion.db
-import com.android4.travel.MyApplication_FB.Companion.email
-import com.android4.travel.MyApplication_FB.Companion.storage
+
 import com.android4.travel.databinding.ActivityAddBinding
 import com.android4.travel.util.dateToString
 import com.bumptech.glide.Glide
@@ -28,6 +26,10 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle("PLAN TALK")
 
     }
 
@@ -52,7 +54,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add, menu)
+        menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -79,12 +81,12 @@ class AddActivity : AppCompatActivity() {
     private fun saveStore(){
         //add............................
         val data = mapOf(
-            "email" to MyApplication_FB.email,
+            "email" to MyApplication.email,
             "content" to binding.addEditView.text.toString(),
             "date" to dateToString(Date())
         )
 
-        MyApplication_FB.db.collection("news")
+        MyApplication.db.collection("news")
             .add(data)
             .addOnSuccessListener {
                 uploadImage(it.id)
@@ -96,7 +98,7 @@ class AddActivity : AppCompatActivity() {
     }
     private fun uploadImage(docId: String){
         //add............................
-        val storage = MyApplication_FB.storage
+        val storage = MyApplication.storage
         val storageRef = storage.reference
         val imgRef = storageRef.child("images/${docId}.jpg")
 

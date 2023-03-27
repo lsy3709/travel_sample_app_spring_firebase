@@ -4,9 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+
 import com.android4.travel.MyApplication
+import com.android4.travel.MyApplication.Companion.storage
 import com.android4.travel.MyApplication_FB
-import com.android4.travel.MyApplication_FB.Companion.storage
 import com.android4.travel.databinding.ItemMainBinding
 import com.android4.travel.model.ItemData
 import com.bumptech.glide.Glide
@@ -33,7 +34,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         }
 
         //스토리지 이미지 다운로드........................
-        val imgRef = MyApplication_FB.storage.reference.child("images/${data.docId}.jpg")
+        val imgRef = MyApplication.storage.reference.child("images/${data.docId}.jpg")
         imgRef.downloadUrl.addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 Glide.with(context)

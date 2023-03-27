@@ -11,7 +11,7 @@ import com.google.firebase.storage.ktx.storage
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MyApplication: Application() {
+class MyApplication: MultiDexApplication() {
 
     companion object {
         lateinit var auth: FirebaseAuth

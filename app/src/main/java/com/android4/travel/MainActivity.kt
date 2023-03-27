@@ -177,6 +177,14 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+            R.id.menu_main_auth -> {
+                Intent(this@MainActivity, AuthActivity::class.java).run {
+                    startActivity(this)
+                }
+            }
+
+
+
         }
         return super.onOptionsItemSelected(item)
     }

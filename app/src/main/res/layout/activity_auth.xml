@@ -28,6 +28,17 @@
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/mainBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#FF0000"
+            android:text="메인으로"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/goSignInBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

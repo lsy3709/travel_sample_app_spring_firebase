@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.android4.travel.MyApplication_FB.Companion.auth
-import com.android4.travel.MyApplication_FB.Companion.checkAuth
-import com.android4.travel.MyApplication_FB.Companion.email
+
 import com.android4.travel.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -129,6 +127,7 @@ class AuthActivity : AppCompatActivity() {
             binding.run {
                 authMainTextView.text = "${MyApplication.email} 님 반갑습니다."
                 logoutBtn.visibility= View.VISIBLE
+                mainBtn.visibility= View.VISIBLE
                 goSignInBtn.visibility= View.GONE
                 googleLoginBtn.visibility= View.GONE
                 authEmailEditView.visibility= View.GONE
@@ -140,6 +139,7 @@ class AuthActivity : AppCompatActivity() {
         }else if(mode === "logout"){
             binding.run {
                 authMainTextView.text = "로그인 하거나 회원가입 해주세요."
+                mainBtn.visibility= View.VISIBLE
                 logoutBtn.visibility = View.GONE
                 goSignInBtn.visibility = View.VISIBLE
                 googleLoginBtn.visibility = View.VISIBLE
@@ -157,6 +157,7 @@ class AuthActivity : AppCompatActivity() {
                 authPasswordEditView.visibility = View.VISIBLE
                 signBtn.visibility = View.VISIBLE
                 loginBtn.visibility = View.GONE
+                mainBtn.visibility= View.VISIBLE
             }
         }
     }

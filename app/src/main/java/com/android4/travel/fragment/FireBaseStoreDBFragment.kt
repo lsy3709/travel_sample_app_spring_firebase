@@ -56,12 +56,12 @@ class FireBaseStoreDBFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
+//        inflater.inflate(R.menu.menu_main, menu)
 //        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        startActivity(Intent(activity, AuthActivity::class.java))
+//        startActivity(Intent(activity, AuthActivity::class.java))
         return super.onOptionsItemSelected(item)
     }
 
