@@ -1,6 +1,7 @@
 package com.android4.travel
 
 import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore

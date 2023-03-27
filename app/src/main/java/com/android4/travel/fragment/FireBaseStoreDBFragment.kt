@@ -9,13 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android4.travel.AddActivity
-import com.android4.travel.AuthActivity
+import com.android4.travel.*
 
-
-import com.android4.travel.MyApplication_FB
-
-import com.android4.travel.R
 
 import com.android4.travel.databinding.FragmentFireBaseStoreDBBinding
 import com.android4.travel.model.ItemData
@@ -37,7 +32,7 @@ class FireBaseStoreDBFragment : Fragment() {
 
 //        myCheckPermission(activity as AppCompatActivity)
         binding.addFab.setOnClickListener {
-            if(MyApplication_FB.checkAuth()){
+            if(MyApplication.checkAuth()){
                 startActivity(Intent(activity, AddActivity::class.java))
             }else {
                 Toast.makeText(activity, "인증진행해주세요..", Toast.LENGTH_SHORT).show()
@@ -50,7 +45,7 @@ class FireBaseStoreDBFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if(!MyApplication_FB.checkAuth()){
+        if(!MyApplication.checkAuth()){
             binding.logoutTextView.visibility= View.VISIBLE
             binding.mainRecyclerView.visibility=View.GONE
         }else {
@@ -71,7 +66,7 @@ class FireBaseStoreDBFragment : Fragment() {
     }
 
     private fun makeRecyclerView(){
-        MyApplication_FB.db.collection("news")
+        MyApplication.db.collection("news")
             .get()
             .addOnSuccessListener {result ->
                 val itemList = mutableListOf<ItemData>()
