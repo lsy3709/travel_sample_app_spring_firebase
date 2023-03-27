@@ -134,5 +134,11 @@ class LoginActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        binding.googleBtn.setOnClickListener {
+            val intent = Intent(this, AuthActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 }

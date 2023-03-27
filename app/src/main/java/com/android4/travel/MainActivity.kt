@@ -16,6 +16,7 @@ import com.android4.travel.databinding.ActivityMainBinding
 import com.android4.travel.fragment.*
 import com.android4.travel.model.TripListModel
 import com.android4.travel.model.User
+import com.android4.travel.util.myCheckPermission
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.ktx.database
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        myCheckPermission(this)
         //SharedPreference를 이용하여 간단한 데이터들을 저장하고 불러올 수 있다.
         val pref = getSharedPreferences("inputPref", Context.MODE_PRIVATE)
         var check = pref.getInt("input", 0)
@@ -108,7 +110,8 @@ class MainActivity : AppCompatActivity() {
                 0 -> tab.text = "여행"
                 1 -> tab.text = "일정"
                 2 -> tab.text = "일기"
-                3 -> tab.text = "후기"
+                3 -> tab.text = "파DB"
+                4 -> tab.text = "파FCM"
             }
         }.attach()
 
@@ -188,13 +191,15 @@ class MainActivity : AppCompatActivity() {
 
 //viewpager adapter
 class MainViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = 5
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> TripFragment()
             1 -> ListFragment()
             2 -> DiaryCalFragment()
+            3 -> FireBaseStoreDBFragment()
+            4 -> DiaryCal2Fragment()
             else -> DiaryCal2Fragment()
         }
     }

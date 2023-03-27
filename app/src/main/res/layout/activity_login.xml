@@ -80,5 +80,13 @@
             android:backgroundTint="#619CD6"
             android:textSize="20sp"
             android:text="Sign up" />
+
+        <Button
+            android:id="@+id/googleBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#619CD6"
+            android:textSize="20sp"
+            android:text="인증후 파베확인하기" />
     </LinearLayout>
 </LinearLayout>

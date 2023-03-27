@@ -13,34 +13,61 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name="com.android4.travel.MyApplication"
+        android:name=".MyApplication"
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Travel"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".AuthActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
-        <!--File Provider Start-->
+        <meta-data
+            android:name="com.google.firebase.message.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.message.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.message.default_notification_channel_id"
+            android:value="fcm_default_channel" />
+
+        <service
+            android:name=".MyFirebaseMessageService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".AddActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" /> <!-- File Provider Start -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.android4.travel.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-        <!--File Provider End-->
-
-
+        </provider> <!-- File Provider End -->
         <activity
-            android:name="com.android4.travel.DiaryFiles.DiaryUpdateActivity"
-            android:exported="false">
-        </activity>
+            android:name=".DiaryFiles.DiaryUpdateActivity"
+            android:exported="false" />
         <activity
-            android:name="com.android4.travel.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +76,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android4.travel.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,31 +85,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android4.travel.DiaryFiles.Diary2Activity"
+            android:name=".DiaryFiles.Diary2Activity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.InputTripActivity"
+            android:name=".InputTripActivity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.InputActivity"
+            android:name=".InputActivity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.ChatActivity"
+            android:name=".ChatActivity"
             android:exported="true" />
         <activity
-            android:name="com.android4.travel.MainActivity"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name="com.android4.travel.DiaryFiles.TripReviewActivity"
+            android:name=".DiaryFiles.TripReviewActivity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.DiaryFiles.DiaryDetailActivity"
+            android:name=".DiaryFiles.DiaryDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.DiaryFiles.DiaryDetail2Activity"
+            android:name=".DiaryFiles.DiaryDetail2Activity"
             android:exported="false" />
         <activity
-            android:name="com.android4.travel.DiaryFiles.DiaryActivity"
+            android:name=".DiaryFiles.DiaryActivity"
             android:exported="false" />
 
         <uses-library
