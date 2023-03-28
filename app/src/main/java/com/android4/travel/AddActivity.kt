@@ -74,6 +74,17 @@ class AddActivity : AppCompatActivity() {
                 Toast.makeText(this, "데이터가 모두 입력되지 않았습니다.", Toast.LENGTH_SHORT).show()
             }
 
+        }else if(item.itemId === R.id.menu_main_auth){
+            val intent = Intent(this@AddActivity,AuthActivity::class.java)
+            startActivity(intent)
+        } else if(item.itemId === R.id.menu_logout){
+
+                //로그아웃...........
+                MyApplication.auth.signOut()
+                MyApplication.email = null
+            val intent = Intent(this@AddActivity,AuthActivity::class.java)
+            startActivity(intent)
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -96,6 +107,9 @@ class AddActivity : AppCompatActivity() {
             }
 
     }
+
+
+
     private fun uploadImage(docId: String){
         //add............................
         val storage = MyApplication.storage

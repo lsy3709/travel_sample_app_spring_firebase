@@ -1,5 +1,6 @@
 package com.android4.travel
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -54,6 +55,11 @@ class AuthActivity : AppCompatActivity() {
             MyApplication.auth.signOut()
             MyApplication.email = null
             changeVisibility("logout")
+        }
+
+        binding.mainBtn.setOnClickListener {
+            val intent = Intent(this@AuthActivity, MainActivity::class.java)
+            startActivity(intent)
         }
 
         binding.goSignInBtn.setOnClickListener{
