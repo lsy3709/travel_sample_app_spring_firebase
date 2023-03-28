@@ -59,6 +59,14 @@ fun deleteImage(docId: String) {
     imgRef.delete()
 }
 
+fun deleteVideo(docId: String) {
+    //add............................
+    val storage = MyApplication.storage
+    val storageRef = storage.reference
+    val videoRef = storageRef.child("images/${docId}.mp4")
+    videoRef.delete()
+}
+
 
 
 fun updateStore(docId: String){

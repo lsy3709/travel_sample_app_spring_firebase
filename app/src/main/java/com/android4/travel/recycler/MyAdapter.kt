@@ -26,6 +26,7 @@ import com.android4.travel.databinding.ItemMainBinding
 import com.android4.travel.model.ItemData
 import com.android4.travel.util.deleteImage
 import com.android4.travel.util.deleteStore
+import com.android4.travel.util.deleteVideo
 import com.bumptech.glide.Glide
 import retrofit2.Call
 import retrofit2.Callback
@@ -92,8 +93,11 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
                     //스토어 삭제
                     data.docId?.let { it1 -> deleteStore(it1) }
 
-                    //스토리지 삭제
+                    //스토리지 사진 삭제
                     data.docId?.let { it1 -> deleteImage(it1) }
+
+                    //스토리지 비디오 삭제
+                    data.docId?.let { it1 -> deleteVideo(it1) }
 
                     val intent = Intent(context,MainActivity::class.java)
                     context.startActivity(intent)
