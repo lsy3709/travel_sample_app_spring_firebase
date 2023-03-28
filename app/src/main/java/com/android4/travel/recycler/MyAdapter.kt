@@ -22,6 +22,8 @@ import com.android4.travel.MyApplication.Companion.storage
 import com.android4.travel.MyApplication_FB
 import com.android4.travel.databinding.ItemMainBinding
 import com.android4.travel.model.ItemData
+import com.android4.travel.util.deleteImage
+import com.android4.travel.util.deleteStore
 import com.bumptech.glide.Glide
 import retrofit2.Call
 import retrofit2.Callback
@@ -114,39 +116,6 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         }
     }
 
-    fun updateStore(docId: String){
-        //delete............................
-        MyApplication.db.collection("news")
-            .document(docId)
-            .delete()
 
-    }
+ }
 
-    fun deleteStore(docId: String){
-        //delete............................
-        MyApplication.db.collection("news")
-            .document(docId)
-            .delete()
-
-    }
-
-    fun deleteImage(docId: String){
-        //add............................
-        val storage = MyApplication.storage
-        val storageRef = storage.reference
-        val imgRef = storageRef.child("images/${docId}.jpg")
-        imgRef.delete()
-
-//            val file = Uri.fromFile(File(filePath))
-//            imgRef.putFile(file)
-//                .addOnSuccessListener {
-//                    Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
-//                    finish()
-//                }
-//                .addOnFailureListener{
-//                    Log.d("kkang", "file save error", it)
-//                }
-
-    }
-
-}
