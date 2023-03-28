@@ -17,10 +17,7 @@ import com.android4.travel.MyApplication
 import com.android4.travel.R
 import com.android4.travel.databinding.ActivityFireDbDetailBinding
 import com.android4.travel.databinding.ActivityLoginBinding
-import com.android4.travel.util.dateToString
-import com.android4.travel.util.deleteImage
-import com.android4.travel.util.deleteStore
-import com.android4.travel.util.updateStore
+import com.android4.travel.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.io.File
@@ -77,26 +74,8 @@ class FireDbDetailActivity : AppCompatActivity() {
             }
         }
 
-
-        fun uploadImage(docId: String){
-            //add............................
-            val storage = MyApplication.storage
-            val storageRef = storage.reference
-            val imgRef = storageRef.child("images/${docId}.jpg")
-
-            val file = Uri.fromFile(File(filePath))
-            imgRef.putFile(file)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                .addOnFailureListener{
-                    Log.d("kkang", "file save error", it)
-                }
-
-        }
-
-        fun updateStoreNoImg(){
+        // 글만
+        fun updateStoreNoImgNoVideo(){
             MyApplication.db.collection("news")
                 .document(docId)
                 .update(mapOf("content" to binding.itemContentView.text.toString()))
@@ -104,13 +83,47 @@ class FireDbDetailActivity : AppCompatActivity() {
             goToMain()
         }
 
+        // 이미지 만
         fun updateStoreWithImg(){
             MyApplication.db.collection("news")
                 .document(docId)
                 .update(mapOf("content" to binding.itemContentView.text.toString()))
                 .addOnSuccessListener {
                     deleteImage(docId)
-                    uploadImage(docId)
+                    uploadImage(this,docId,filePath)
+                    goToMain()
+                }
+                .addOnFailureListener{
+                    Log.d("lsy", "data save error", it)
+                }
+
+        }
+
+        // 비디오, 사진 둘다
+        fun updateStoreWithImgVideo(){
+            MyApplication.db.collection("news")
+                .document(docId)
+                .update(mapOf("content" to binding.itemContentView.text.toString()))
+                .addOnSuccessListener {
+                    deleteImage(docId)
+                    uploadImage(this,docId,filePath)
+                    deleteVideo(docId)
+                    uploadVideo(this,docId,filePathVideo)
+                    goToMain()
+                }
+                .addOnFailureListener{
+                    Log.d("lsy", "data save error", it)
+                }
+
+        }
+        // 비디오 만
+        fun updateStoreWithVideo(){
+            MyApplication.db.collection("news")
+                .document(docId)
+                .update(mapOf("content" to binding.itemContentView.text.toString()))
+                .addOnSuccessListener {
+                    deleteVideo(docId)
+                    uploadVideo(this,docId,filePathVideo)
                     goToMain()
                 }
                 .addOnFailureListener{
@@ -121,8 +134,23 @@ class FireDbDetailActivity : AppCompatActivity() {
         //게시글 수정 적용
 
         binding.updateFBtn.setOnClickListener {
-            if(binding.itemImageView.drawable !== null && binding.itemContentView.text.isNotEmpty() && imgStatus === 1){
+            if(imgStatus === 1 && videoStatus === 1 && binding.itemContentView.text.isNotEmpty()){
                 //store 에 먼저 데이터를 저장후 document id 값으로 업로드 파일 이름 지정
+                AlertDialog.Builder(this)
+                    .setTitle("게시글 진짜 수정")
+                    .setMessage("진짜 수정 하시겠습니까?")
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                        // "예"를 선택했을 때의 Action
+                        updateStoreWithImgVideo()
+
+                    })
+                    .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->
+                        // "아니오"를 선택했을 때의 Action
+                    })
+                    .show()
+
+            } else if(imgStatus === 1 && videoStatus === 0 && binding.itemContentView.text.isNotEmpty()) {
                 AlertDialog.Builder(this)
                     .setTitle("게시글 진짜 수정")
                     .setMessage("진짜 수정 하시겠습니까?")
@@ -136,15 +164,15 @@ class FireDbDetailActivity : AppCompatActivity() {
                         // "아니오"를 선택했을 때의 Action
                     })
                     .show()
-
-            } else if(binding.itemImageView.drawable !== null && binding.itemContentView.text.isNotEmpty() && imgStatus === 0) {
+            }
+            else if(imgStatus === 0 && videoStatus === 1 && binding.itemContentView.text.isNotEmpty()) {
                 AlertDialog.Builder(this)
                     .setTitle("게시글 진짜 수정")
                     .setMessage("진짜 수정 하시겠습니까?")
                     .setIcon(android.R.drawable.ic_delete)
                     .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                         // "예"를 선택했을 때의 Action
-                        updateStoreNoImg()
+                        updateStoreWithVideo()
 
                     })
                     .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->
@@ -152,7 +180,21 @@ class FireDbDetailActivity : AppCompatActivity() {
                     })
                     .show()
             }
+            else if(imgStatus === 0 && videoStatus === 0 && binding.itemContentView.text.isNotEmpty()) {
+                AlertDialog.Builder(this)
+                    .setTitle("게시글 진짜 수정")
+                    .setMessage("진짜 수정 하시겠습니까?")
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                        // "예"를 선택했을 때의 Action
+                        updateStoreNoImgNoVideo()
 
+                    })
+                    .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->
+                        // "아니오"를 선택했을 때의 Action
+                    })
+                    .show()
+            }
             else {
                 Toast.makeText(this, "데이터가 모두 입력되지 않았습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -166,6 +208,7 @@ class FireDbDetailActivity : AppCompatActivity() {
         {
             if(it.resultCode === android.app.Activity.RESULT_OK){
                 imgStatus = 1
+                binding.itemImageView.visibility = View.VISIBLE
                 Glide
                     .with(getApplicationContext())
                     .load(it.data?.data)
@@ -192,11 +235,38 @@ class FireDbDetailActivity : AppCompatActivity() {
             requestLauncher.launch(intent)
         }
 
+        //비디오
+        val requestVideoLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult())
+        {
+            if(it.resultCode === android.app.Activity.RESULT_OK){
+                videoStatus = 1
+                binding.itemVideoView.visibility = View.VISIBLE
+                val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
 
-        // 메인으로
-        binding.mainBtn.setOnClickListener {
-            goToMain()
+                binding.itemVideoView.setMediaController(mc)
+
+                val fileUri: Uri = it.data!!.data!!
+                val file : String = fileUri.toString()
+
+                binding.itemVideoView.setVideoPath(file) // 선택한 비디오 경로 비디오뷰에 셋
+                binding.itemVideoView.start() // 비디오뷰 시작
+
+
+                val cursor = contentResolver.query(it.data?.data as Uri,
+                    arrayOf<String>(MediaStore.Images.Media.DATA), null, null, null);
+                cursor?.moveToFirst().let {
+                    filePathVideo=cursor?.getString(0) as String
+                }
+            }
         }
+
+        binding.videoUpBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.type = "video/*"
+            requestVideoLauncher.launch(intent)
+        }
+
 
         //삭제 확인 완료
         binding.deleteFBtn.setOnClickListener {
@@ -229,6 +299,81 @@ class FireDbDetailActivity : AppCompatActivity() {
 
 
     }
+
+    private fun saveStoreNoImgNoVideo(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.itemContentView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+        goToMain()
+
+    }
+
+    private fun saveStore(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.itemContentView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+
+                uploadImage(this@FireDbDetailActivity,it.id,filePath)
+                uploadVideo(this@FireDbDetailActivity,it.id,filePathVideo)
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+        goToMain()
+    }
+
+    private fun saveStoreNoVideo(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.itemContentView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+                uploadImage(this@FireDbDetailActivity,it.id,filePath)
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+        goToMain()
+
+    }
+
+    private fun saveStoreNoImg(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.itemContentView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+                uploadVideo(this@FireDbDetailActivity,it.id,filePathVideo)
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+        goToMain()
+    }
+
     private fun goToMain() {
         val intent = Intent(this@FireDbDetailActivity, MainActivity::class.java)
         startActivity(intent)

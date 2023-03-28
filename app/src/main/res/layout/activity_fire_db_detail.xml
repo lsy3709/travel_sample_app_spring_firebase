@@ -45,6 +45,12 @@
                 android:layout_marginLeft="20dp"
                 android:text="사진"/>
             <Button
+                android:id="@+id/videoUpBtn"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="영상"/>
+            <Button
                 android:id="@+id/updateFBtn"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
@@ -57,12 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="삭제"/>
-            <Button
-                android:id="@+id/mainBtn"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="메인"/>
 
         </LinearLayout>
 
