@@ -9,6 +9,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -114,6 +115,20 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
                     .into(holder.binding.itemImageView)
             }
         }
+
+        //스토리지 비디오 다운로드........................
+        val videoViewRef = MyApplication.storage.reference.child("images/${data.docId}.mp4")
+        videoViewRef.downloadUrl.addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                Log.d("lsy","비디오 경로1 task.result: ${task.result}")
+                Log.d("lsy","비디오 경로2 task.result.toString: ${task.result.toString()}")
+                val mc = MediaController(context) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+                holder.binding.itemVideoView.setMediaController(mc)
+                holder.binding.itemVideoView.setVideoURI(task.result)
+
+            }
+        }
+
     }
 
 

@@ -53,6 +53,13 @@
         android:layout_marginBottom="5dp"
         android:scaleType="fitXY" />
 
+    <VideoView
+        android:id="@+id/itemVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        
+        />
+
     <TextView
         android:id="@+id/itemContentView"
         android:layout_width="match_parent"

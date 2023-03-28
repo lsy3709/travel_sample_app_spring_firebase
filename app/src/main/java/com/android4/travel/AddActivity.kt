@@ -8,6 +8,8 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 
@@ -22,6 +24,9 @@ import java.util.*
 class AddActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
     lateinit var filePath: String
+    lateinit var filePathVideo: String
+    var imgStatus = 0
+    var videoStatus = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +39,13 @@ class AddActivity : AppCompatActivity() {
 
     }
 
+    //사진
     val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult())
     {
         if(it.resultCode === android.app.Activity.RESULT_OK){
+            imgStatus = 1
+            binding.addImageView.visibility = View.VISIBLE
             Glide
                 .with(getApplicationContext())
                 .load(it.data?.data)
@@ -50,6 +58,32 @@ class AddActivity : AppCompatActivity() {
                 arrayOf<String>(MediaStore.Images.Media.DATA), null, null, null);
             cursor?.moveToFirst().let {
                 filePath=cursor?.getString(0) as String
+            }
+        }
+    }
+
+    //비디오
+    val requestVideoLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult())
+    {
+        if(it.resultCode === android.app.Activity.RESULT_OK){
+            videoStatus = 1
+            binding.addVideoView.visibility = View.VISIBLE
+            val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+
+            binding.addVideoView.setMediaController(mc)
+
+            val fileUri: Uri = it.data!!.data!!
+            val file : String = fileUri.toString()
+
+            binding.addVideoView.setVideoPath(file) // 선택한 비디오 경로 비디오뷰에 셋
+            binding.addVideoView.start() // 비디오뷰 시작
+
+
+            val cursor = contentResolver.query(it.data?.data as Uri,
+                arrayOf<String>(MediaStore.Images.Media.DATA), null, null, null);
+            cursor?.moveToFirst().let {
+                filePathVideo=cursor?.getString(0) as String
             }
         }
     }
@@ -86,6 +120,10 @@ class AddActivity : AppCompatActivity() {
             val intent = Intent(this@AddActivity,AuthActivity::class.java)
             startActivity(intent)
 
+        } else if(item.itemId === R.id.menu_add_video){
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.type = "video/*"
+            requestVideoLauncher.launch(intent)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -102,6 +140,7 @@ class AddActivity : AppCompatActivity() {
             .add(data)
             .addOnSuccessListener {
                 uploadImage(it.id)
+                uploadVideo(it.id)
             }
             .addOnFailureListener{
                 Log.d("kkang", "data save error", it)
@@ -118,6 +157,24 @@ class AddActivity : AppCompatActivity() {
         val imgRef = storageRef.child("images/${docId}.jpg")
 
         val file = Uri.fromFile(File(filePath))
+        imgRef.putFile(file)
+            .addOnSuccessListener {
+                Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "file save error", it)
+            }
+
+    }
+
+    private fun uploadVideo(docId: String){
+        //add............................
+        val storage = MyApplication.storage
+        val storageRef = storage.reference
+        val imgRef = storageRef.child("images/${docId}.mp4")
+
+        val file = Uri.fromFile(File(filePathVideo))
         imgRef.putFile(file)
             .addOnSuccessListener {
                 Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()

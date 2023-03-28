@@ -16,6 +16,12 @@
         android:icon="@android:drawable/ic_menu_gallery"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/menu_add_video"
+        android:title="video"
+        android:icon="@android:drawable/ic_menu_gallery"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/menu_add_save"
         android:title="저장"
         app:showAsAction="never"/>
