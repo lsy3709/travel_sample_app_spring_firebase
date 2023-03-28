@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 import com.android4.travel.databinding.ActivityAddBinding
 import com.android4.travel.util.dateToString
@@ -102,14 +103,24 @@ class AddActivity : AppCompatActivity() {
             )
             requestLauncher.launch(intent)
         }else if(item.itemId === R.id.menu_add_save){
-            if(binding.addImageView.drawable !== null && binding.addEditView.text.isNotEmpty()){
+            if(imgStatus === 1 && videoStatus === 1 && binding.addEditView.text.isNotEmpty()){
                 //store 에 먼저 데이터를 저장후 document id 값으로 업로드 파일 이름 지정
                 saveStore()
-            }else {
+            } else if (imgStatus === 1 && videoStatus === 0 && binding.addEditView.text.isNotEmpty()){
+                saveStoreNoVideo()
+            }
+            else if (imgStatus === 0 && videoStatus === 1 && binding.addEditView.text.isNotEmpty()){
+                saveStoreNoImg()
+            }
+            else if (imgStatus === 0 && videoStatus === 0 &&binding.addEditView.text.isNotEmpty()){
+                saveStoreNoImgNoVideo()
+            }
+            else {
                 Toast.makeText(this, "데이터가 모두 입력되지 않았습니다.", Toast.LENGTH_SHORT).show()
             }
 
-        }else if(item.itemId === R.id.menu_main_auth){
+        }
+        else if(item.itemId === R.id.menu_main_auth){
             val intent = Intent(this@AddActivity,AuthActivity::class.java)
             startActivity(intent)
         } else if(item.itemId === R.id.menu_logout){
@@ -128,6 +139,27 @@ class AddActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     //....................
+
+    private fun saveStoreNoImgNoVideo(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.addEditView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+
+       goToMain()
+
+    }
+
     private fun saveStore(){
         //add............................
         val data = mapOf(
@@ -145,7 +177,46 @@ class AddActivity : AppCompatActivity() {
             .addOnFailureListener{
                 Log.d("kkang", "data save error", it)
             }
+        goToMain()
+    }
 
+    private fun saveStoreNoVideo(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.addEditView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+                uploadImage(it.id)
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+        goToMain()
+
+    }
+
+    private fun saveStoreNoImg(){
+        //add............................
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.addEditView.text.toString(),
+            "date" to dateToString(Date())
+        )
+
+        MyApplication.db.collection("news")
+            .add(data)
+            .addOnSuccessListener {
+                uploadVideo(it.id)
+            }
+            .addOnFailureListener{
+                Log.d("kkang", "data save error", it)
+            }
+        goToMain()
     }
 
 
@@ -184,5 +255,10 @@ class AddActivity : AppCompatActivity() {
                 Log.d("kkang", "file save error", it)
             }
 
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this@AddActivity, MainActivity::class.java)
+        startActivity(intent)
     }
 }

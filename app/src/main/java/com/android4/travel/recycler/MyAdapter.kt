@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
@@ -110,6 +111,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         val imgRef = MyApplication.storage.reference.child("images/${data.docId}.jpg")
         imgRef.downloadUrl.addOnCompleteListener{ task ->
             if(task.isSuccessful){
+                holder.binding.itemImageView.visibility = View.VISIBLE
                 Glide.with(context)
                     .load(task.result)
                     .into(holder.binding.itemImageView)
@@ -120,6 +122,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         val videoViewRef = MyApplication.storage.reference.child("images/${data.docId}.mp4")
         videoViewRef.downloadUrl.addOnCompleteListener{ task ->
             if(task.isSuccessful){
+                holder.binding.itemVideoView.visibility = View.VISIBLE
                 Log.d("lsy","비디오 경로1 task.result: ${task.result}")
                 Log.d("lsy","비디오 경로2 task.result.toString: ${task.result.toString()}")
                 val mc = MediaController(context) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)

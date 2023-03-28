@@ -1,6 +1,7 @@
 package com.android4.travel.util
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
@@ -8,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import com.android4.travel.MainActivity
 import com.android4.travel.MyApplication
 import java.io.File
 import java.text.SimpleDateFormat
@@ -55,6 +58,7 @@ fun deleteImage(docId: String) {
     val imgRef = storageRef.child("images/${docId}.jpg")
     imgRef.delete()
 }
+
 
 
 fun updateStore(docId: String){
