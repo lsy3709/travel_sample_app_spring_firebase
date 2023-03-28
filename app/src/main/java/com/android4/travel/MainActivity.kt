@@ -207,8 +207,7 @@ class MainViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fr
             1 -> ListFragment()
             2 -> DiaryCalFragment()
             3 -> FireBaseStoreDBFragment()
-            4 -> DiaryCal2Fragment()
-            else -> DiaryCal2Fragment()
+            else -> FireBaseFcmFragment()
         }
     }
 }

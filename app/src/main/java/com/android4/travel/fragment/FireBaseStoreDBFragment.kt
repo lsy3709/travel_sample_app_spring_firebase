@@ -81,7 +81,7 @@ class FireBaseStoreDBFragment : Fragment() {
                 binding.mainRecyclerView.adapter = context?.let { MyAdapter(it, itemList) }
             }
             .addOnFailureListener{exception ->
-                Log.d("kkang", "error.. getting document..", exception)
+                Log.d("lsy", "error.. getting document..", exception)
                 Toast.makeText(activity, "서버 데이터 획득 실패", Toast.LENGTH_SHORT).show()
             }
     }

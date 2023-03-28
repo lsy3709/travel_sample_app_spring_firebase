@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lavar2"
+    tools:context=".datingTest.auth.LoginDateActivity"
+    android:orientation="vertical">
+
+    <!--안드로이드 이메일 입력시-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailArea"
+            android:hint="email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--안드로이드 패스워드 입력시 : 입력 길이 10, 갯수 세기 활성화-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterMaxLength="10"
+        app:counterEnabled="true"
+        android:background="@color/white"
+        android:layout_margin="10dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pwdArea"
+            android:hint="pwd"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_margin="10dp"
+        android:text="로그인"
+        android:layout_width="match_parent"
+        android:background="@color/mainColor"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

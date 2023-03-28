@@ -127,8 +127,6 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         videoViewRef.downloadUrl.addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 holder.binding.itemVideoView.visibility = View.VISIBLE
-                Log.d("lsy","비디오 경로1 task.result: ${task.result}")
-                Log.d("lsy","비디오 경로2 task.result.toString: ${task.result.toString()}")
                 val mc = MediaController(context) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
                 holder.binding.itemVideoView.setMediaController(mc)
                 holder.binding.itemVideoView.setVideoURI(task.result)

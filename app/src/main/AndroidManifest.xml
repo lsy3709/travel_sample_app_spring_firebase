@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android4.travel">
+    package="com.android4.travel" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -21,15 +21,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Travel"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
         <activity
-            android:name=".DiaryFiles.FireDbDetailActivity"
-            android:exported="true">
-
+            android:name=".MainDateActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
+            android:name=".datingTest.auth.JoinActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".datingTest.auth.LoginDateActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".DiaryFiles.FireDbDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".AuthActivity"
-            android:exported="true">
+            android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -48,7 +67,7 @@
         <service
             android:name=".MyFirebaseMessageService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -62,7 +81,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.android4.travel.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -72,7 +91,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,7 +100,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -81,7 +81,7 @@ fun deleteVideo(docId: String) {
             activity.finish()
         }
         .addOnFailureListener{
-            Log.d("kkang", "file save error", it)
+            Log.d("lsy", "file save error", it)
         }
 
 }
@@ -99,7 +99,7 @@ fun deleteVideo(docId: String) {
             activity.finish()
         }
         .addOnFailureListener{
-            Log.d("kkang", "file save error", it)
+            Log.d("lsy", "file save error", it)
         }
 
 }

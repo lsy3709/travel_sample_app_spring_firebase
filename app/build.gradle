@@ -58,6 +58,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
+
+    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
 
 
 

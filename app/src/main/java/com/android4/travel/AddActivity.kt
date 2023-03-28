@@ -173,7 +173,7 @@ class AddActivity : AppCompatActivity() {
                 uploadVideo(this@AddActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
     }
@@ -192,7 +192,7 @@ class AddActivity : AppCompatActivity() {
                 uploadImage(this@AddActivity,it.id,filePath)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
 
@@ -212,7 +212,7 @@ class AddActivity : AppCompatActivity() {
                 uploadVideo(this@AddActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
     }

@@ -330,7 +330,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                 uploadVideo(this@FireDbDetailActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
     }
@@ -349,7 +349,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                 uploadImage(this@FireDbDetailActivity,it.id,filePath)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
 
@@ -369,7 +369,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                 uploadVideo(this@FireDbDetailActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
+                Log.d("lsy", "data save error", it)
             }
         goToMain()
     }
