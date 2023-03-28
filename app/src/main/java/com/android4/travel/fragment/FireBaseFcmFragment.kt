@@ -21,15 +21,14 @@ class FireBaseFcmFragment : Fragment() {
         binding = FragmentFireBaseFcmBinding.inflate(inflater, container, false)
 
         binding.joinBtn.setOnClickListener {
-//            val intent = Intent(activity, LoginDateActivity::class.java)
-//            startActivity(intent)
-            startActivity(Intent(activity, LoginDateActivity::class.java))
+
+            startActivity(Intent(activity, JoinActivity::class.java))
         }
 
         binding.loginBtn.setOnClickListener {
-//            val intent = Intent(activity, JoinActivity::class.java)
-//            startActivity(intent)
-            startActivity(Intent(activity, JoinActivity::class.java))
+
+            startActivity(Intent(activity, LoginDateActivity::class.java))
+
         }
 
         return binding.root

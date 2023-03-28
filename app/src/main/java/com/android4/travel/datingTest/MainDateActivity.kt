@@ -51,7 +51,7 @@ class MainDateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_date)
 
         //내가 누구를 좋아요 하면, 상대방 좋아요 리스트 목록에 내가 있는지 확인하는 알고리즘.
 
