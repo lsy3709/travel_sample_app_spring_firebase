@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.android4.travel.MainActivity
@@ -31,6 +33,8 @@ class FireDbDetailActivity : AppCompatActivity() {
     lateinit var content : String
     lateinit var docId : String
     lateinit var filePath: String
+    lateinit var filePathVideo: String
+    var videoStatus = 0
     var imgStatus = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +48,6 @@ class FireDbDetailActivity : AppCompatActivity() {
         content = intent.getStringExtra("content").toString()
         docId = intent.getStringExtra("docId").toString()
 
-        Log.d("lsy","값 확인: email : $email")
-        Log.d("lsy","값 확인: email : $date")
-        Log.d("lsy","값 확인: email : $content")
-        Log.d("lsy","값 확인: email : $docId")
-
         binding.itemEmailView.text = email
         binding.itemDateView.text = date
         binding.itemContentView.hint = content
@@ -57,9 +56,24 @@ class FireDbDetailActivity : AppCompatActivity() {
         val imgRef = MyApplication.storage.reference.child("images/${docId}.jpg")
         imgRef.downloadUrl.addOnCompleteListener{ task ->
             if(task.isSuccessful){
+                binding.itemImageView.visibility = View.VISIBLE
                 Glide.with(this)
                     .load(task.result)
                     .into(binding.itemImageView)
+            }
+        }
+
+        //스토리지 비디오 다운로드........................
+        val videoViewRef = MyApplication.storage.reference.child("images/${docId}.mp4")
+        videoViewRef.downloadUrl.addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                binding.itemVideoView.visibility = View.VISIBLE
+                Log.d("lsy","비디오 경로1 task.result: ${task.result}")
+                Log.d("lsy","비디오 경로2 task.result.toString: ${task.result.toString()}")
+                val mc = MediaController(this) // 비디오 컨트롤 가능하게(일시정지, 재시작 등)
+                binding.itemVideoView.setMediaController(mc)
+                binding.itemVideoView.setVideoURI(task.result)
+
             }
         }
 
@@ -87,8 +101,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                 .document(docId)
                 .update(mapOf("content" to binding.itemContentView.text.toString()))
 
-            val intent = Intent(this@FireDbDetailActivity,MainActivity::class.java)
-            startActivity(intent)
+            goToMain()
         }
 
         fun updateStoreWithImg(){
@@ -98,8 +111,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     deleteImage(docId)
                     uploadImage(docId)
-                    val intent = Intent(this@FireDbDetailActivity,MainActivity::class.java)
-                    startActivity(intent)
+                    goToMain()
                 }
                 .addOnFailureListener{
                     Log.d("lsy", "data save error", it)
@@ -183,8 +195,7 @@ class FireDbDetailActivity : AppCompatActivity() {
 
         // 메인으로
         binding.mainBtn.setOnClickListener {
-            val intent = Intent(this@FireDbDetailActivity,MainActivity::class.java)
-            startActivity(intent)
+            goToMain()
         }
 
         //삭제 확인 완료
@@ -202,8 +213,7 @@ class FireDbDetailActivity : AppCompatActivity() {
                     //스토리지 삭제
                 deleteImage(docId)
 
-                    val intent = Intent(this@FireDbDetailActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    goToMain()
 
                 })
                 .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->
@@ -218,5 +228,9 @@ class FireDbDetailActivity : AppCompatActivity() {
 
 
 
+    }
+    private fun goToMain() {
+        val intent = Intent(this@FireDbDetailActivity, MainActivity::class.java)
+        startActivity(intent)
     }
 }

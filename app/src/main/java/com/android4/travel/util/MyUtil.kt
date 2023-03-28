@@ -1,6 +1,7 @@
 package com.android4.travel.util
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -67,7 +68,41 @@ fun deleteVideo(docId: String) {
     videoRef.delete()
 }
 
+ fun uploadImage(activity: AppCompatActivity,docId: String,filePath:String){
+    //add............................
+    val storage = MyApplication.storage
+    val storageRef = storage.reference
+    val imgRef = storageRef.child("images/${docId}.jpg")
 
+    val file = Uri.fromFile(File(filePath))
+    imgRef.putFile(file)
+        .addOnSuccessListener {
+            Toast.makeText(activity, "save ok..", Toast.LENGTH_SHORT).show()
+            activity.finish()
+        }
+        .addOnFailureListener{
+            Log.d("kkang", "file save error", it)
+        }
+
+}
+
+ fun uploadVideo(activity: AppCompatActivity,docId: String,filePathVideo:String){
+    //add............................
+    val storage = MyApplication.storage
+    val storageRef = storage.reference
+    val imgRef = storageRef.child("images/${docId}.mp4")
+
+    val file = Uri.fromFile(File(filePathVideo))
+    imgRef.putFile(file)
+        .addOnSuccessListener {
+            Toast.makeText(activity, "save ok..", Toast.LENGTH_SHORT).show()
+            activity.finish()
+        }
+        .addOnFailureListener{
+            Log.d("kkang", "file save error", it)
+        }
+
+}
 
 fun updateStore(docId: String){
     //delete............................

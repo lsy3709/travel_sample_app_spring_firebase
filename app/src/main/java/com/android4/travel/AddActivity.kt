@@ -14,8 +14,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
+
 import com.android4.travel.databinding.ActivityAddBinding
 import com.android4.travel.util.dateToString
+import com.android4.travel.util.uploadImage
+import com.android4.travel.util.uploadVideo
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -150,12 +153,6 @@ class AddActivity : AppCompatActivity() {
 
         MyApplication.db.collection("news")
             .add(data)
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener{
-                Log.d("kkang", "data save error", it)
-            }
-
        goToMain()
 
     }
@@ -171,8 +168,9 @@ class AddActivity : AppCompatActivity() {
         MyApplication.db.collection("news")
             .add(data)
             .addOnSuccessListener {
-                uploadImage(it.id)
-                uploadVideo(it.id)
+
+                uploadImage(this@AddActivity,it.id,filePath)
+                uploadVideo(this@AddActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
                 Log.d("kkang", "data save error", it)
@@ -191,7 +189,7 @@ class AddActivity : AppCompatActivity() {
         MyApplication.db.collection("news")
             .add(data)
             .addOnSuccessListener {
-                uploadImage(it.id)
+                uploadImage(this@AddActivity,it.id,filePath)
             }
             .addOnFailureListener{
                 Log.d("kkang", "data save error", it)
@@ -211,7 +209,7 @@ class AddActivity : AppCompatActivity() {
         MyApplication.db.collection("news")
             .add(data)
             .addOnSuccessListener {
-                uploadVideo(it.id)
+                uploadVideo(this@AddActivity,it.id,filePathVideo)
             }
             .addOnFailureListener{
                 Log.d("kkang", "data save error", it)
@@ -219,43 +217,6 @@ class AddActivity : AppCompatActivity() {
         goToMain()
     }
 
-
-
-    private fun uploadImage(docId: String){
-        //add............................
-        val storage = MyApplication.storage
-        val storageRef = storage.reference
-        val imgRef = storageRef.child("images/${docId}.jpg")
-
-        val file = Uri.fromFile(File(filePath))
-        imgRef.putFile(file)
-            .addOnSuccessListener {
-                Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener{
-                Log.d("kkang", "file save error", it)
-            }
-
-    }
-
-    private fun uploadVideo(docId: String){
-        //add............................
-        val storage = MyApplication.storage
-        val storageRef = storage.reference
-        val imgRef = storageRef.child("images/${docId}.mp4")
-
-        val file = Uri.fromFile(File(filePathVideo))
-        imgRef.putFile(file)
-            .addOnSuccessListener {
-                Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener{
-                Log.d("kkang", "file save error", it)
-            }
-
-    }
 
     private fun goToMain() {
         val intent = Intent(this@AddActivity, MainActivity::class.java)
