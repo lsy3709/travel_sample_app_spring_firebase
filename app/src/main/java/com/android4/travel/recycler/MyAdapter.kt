@@ -10,9 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android4.travel.DiaryFiles.DiaryActivity
+import com.android4.travel.DiaryFiles.FireDbDetailActivity
 import com.android4.travel.MainActivity
 
 import com.android4.travel.MyApplication
@@ -46,6 +48,35 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
             itemDateView.text=data.date
             itemContentView.text=data.content
         }
+
+        holder.binding.updateFBtn.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("게시글 수정")
+                .setMessage("수정 하시겠습니까?")
+                .setIcon(android.R.drawable.ic_menu_edit)
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                    // "예"를 선택했을 때의 Action
+                    //스토어 수정
+
+
+                    //스토리지 수정
+
+
+                    val intent = Intent(holder.itemView?.context, FireDbDetailActivity::class.java)
+                    intent.putExtra("email","${data.email}")
+                    intent.putExtra("date","${data.date}")
+                    intent.putExtra("content","${data.content}")
+                    intent.putExtra("docId","${data.docId}")
+                    startActivity(holder.itemView.context,intent,null)
+
+
+                })
+                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->
+                    // "아니오"를 선택했을 때의 Action
+                })
+                .show()
+        }
+
         holder.binding.deleteFBtn.setOnClickListener {
 
             AlertDialog.Builder(context)
@@ -70,6 +101,8 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
                 .show()
         }
 
+
+
         //스토리지 이미지 다운로드........................
         val imgRef = MyApplication.storage.reference.child("images/${data.docId}.jpg")
         imgRef.downloadUrl.addOnCompleteListener{ task ->
@@ -81,6 +114,14 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
         }
     }
 
+    fun updateStore(docId: String){
+        //delete............................
+        MyApplication.db.collection("news")
+            .document(docId)
+            .delete()
+
+    }
+
     fun deleteStore(docId: String){
         //delete............................
         MyApplication.db.collection("news")
@@ -88,6 +129,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>): Recy
             .delete()
 
     }
+
     fun deleteImage(docId: String){
         //add............................
         val storage = MyApplication.storage
