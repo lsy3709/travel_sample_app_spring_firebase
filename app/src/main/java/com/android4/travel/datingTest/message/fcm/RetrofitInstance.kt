@@ -1,6 +1,6 @@
-package com.example.date_test.message.fcm
+package com.android4.travel.datingTest.message.fcm
 
-import com.example.date_test.message.fcm.Repo.Companion.BASE_URL
+import com.android4.travel.datingTest.message.fcm.Repo.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

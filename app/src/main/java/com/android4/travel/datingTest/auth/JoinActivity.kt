@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.android4.travel.MainActivity
 import com.android4.travel.R
 import com.android4.travel.databinding.ActivityJoinBinding
-import com.example.date_test.utils.FirebaseRef
+import com.android4.travel.datingTest.utils.FirebaseRef
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth

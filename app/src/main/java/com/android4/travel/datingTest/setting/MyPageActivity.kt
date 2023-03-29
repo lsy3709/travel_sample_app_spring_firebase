@@ -1,20 +1,17 @@
-package com.example.date_test.setting
+package com.android4.travel.datingTest.setting
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Process.myUid
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import com.android4.travel.MyApplication.Companion.auth
 import com.android4.travel.R
 import com.android4.travel.datingTest.auth.UserDataModel
 
 
 import com.bumptech.glide.Glide
 
-import com.example.date_test.utils.FirebaseAuthUtils
-import com.example.date_test.utils.FirebaseRef
-import com.example.date_test.utils.MyInfo.Companion.myNickname
+import com.android4.travel.datingTest.utils.FirebaseAuthUtils
+import com.android4.travel.datingTest.utils.FirebaseRef
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

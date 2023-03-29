@@ -1,4 +1,4 @@
-package com.example.date_test.message
+package com.android4.travel.datingTest.message
 
 import android.os.Bundle
 import android.util.Log
@@ -6,8 +6,8 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.android4.travel.R
 
-import com.example.date_test.utils.FirebaseAuthUtils
-import com.example.date_test.utils.FirebaseRef
+import com.android4.travel.datingTest.utils.FirebaseAuthUtils
+import com.android4.travel.datingTest.utils.FirebaseRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

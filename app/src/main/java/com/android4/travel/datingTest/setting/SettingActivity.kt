@@ -1,17 +1,18 @@
-package com.example.date_test.setting
+package com.android4.travel.datingTest.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.android4.travel.MyApplication.Companion.auth
+import com.android4.travel.MainActivity
 import com.android4.travel.R
 import com.android4.travel.datingTest.MainDateActivity
+import com.android4.travel.datingTest.auth.LoginDateActivity
 
 
-import com.example.date_test.message.MyLikeListActivity
-import com.example.date_test.message.MyMsgActivity
-import com.example.date_test.setting.MyPageActivity
+import com.android4.travel.datingTest.message.MyLikeListActivity
+import com.android4.travel.datingTest.message.MyMsgActivity
+import com.android4.travel.fragment.FireBaseFcmFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -79,7 +80,7 @@ class SettingActivity : AppCompatActivity() {
             auth.signOut()
 
             // 인트로 액티비티로 이동하는 부분.
-            val intent = Intent(this, MainDateActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
 
         }

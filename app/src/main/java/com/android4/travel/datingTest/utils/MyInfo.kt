@@ -1,4 +1,4 @@
-package com.example.date_test.utils
+package com.android4.travel.datingTest.utils
 
 class MyInfo {
 

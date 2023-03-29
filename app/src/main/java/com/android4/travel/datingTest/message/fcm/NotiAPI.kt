@@ -1,7 +1,7 @@
-package com.example.date_test.message.fcm
+package com.android4.travel.datingTest.message.fcm
 
-import com.example.date_test.message.fcm.Repo.Companion.CONTENT_TYPE
-import com.example.date_test.message.fcm.Repo.Companion.SERVER_KEY
+import com.android4.travel.datingTest.message.fcm.Repo.Companion.CONTENT_TYPE
+import com.android4.travel.datingTest.message.fcm.Repo.Companion.SERVER_KEY
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body

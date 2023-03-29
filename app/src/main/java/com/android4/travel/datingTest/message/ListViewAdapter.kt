@@ -1,4 +1,4 @@
-package com.example.date_test.message
+package com.android4.travel.datingTest.message
 
 import android.content.Context
 import android.view.LayoutInflater

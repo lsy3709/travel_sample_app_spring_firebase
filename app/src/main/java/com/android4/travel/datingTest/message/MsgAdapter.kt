@@ -1,4 +1,4 @@
-package com.example.date_test.message
+package com.android4.travel.datingTest.message
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.android4.travel.R
+import com.android4.travel.datingTest.message.MsgModel
 
 
 class MsgAdapter(val context : Context, val items : MutableList<MsgModel>) : BaseAdapter() {

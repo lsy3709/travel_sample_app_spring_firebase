@@ -1,4 +1,4 @@
-package com.example.date_test.message.fcm
+package com.android4.travel.datingTest.message.fcm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

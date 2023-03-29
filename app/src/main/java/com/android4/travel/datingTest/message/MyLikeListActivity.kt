@@ -1,4 +1,4 @@
-package com.example.date_test.message
+package com.android4.travel.datingTest.message
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,16 +9,15 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.android4.travel.MyApplication.Companion.auth
 import com.android4.travel.R
 import com.android4.travel.datingTest.auth.UserDataModel
 
-import com.example.date_test.message.fcm.NotiModel
-import com.example.date_test.message.fcm.PushNotification
-import com.example.date_test.message.fcm.RetrofitInstance
-import com.example.date_test.utils.FirebaseAuthUtils
-import com.example.date_test.utils.FirebaseRef
-import com.example.date_test.utils.MyInfo
+import com.android4.travel.datingTest.message.fcm.NotiModel
+import com.android4.travel.datingTest.message.fcm.PushNotification
+import com.android4.travel.datingTest.message.fcm.RetrofitInstance
+import com.android4.travel.datingTest.utils.FirebaseAuthUtils
+import com.android4.travel.datingTest.utils.FirebaseRef
+import com.android4.travel.datingTest.utils.MyInfo
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

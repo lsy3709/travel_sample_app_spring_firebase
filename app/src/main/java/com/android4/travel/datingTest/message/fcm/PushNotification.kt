@@ -1,4 +1,6 @@
-package com.example.date_test.message.fcm
+package com.android4.travel.datingTest.message.fcm
+
+import com.android4.travel.datingTest.message.fcm.NotiModel
 
 class PushNotification (
     val data : NotiModel,

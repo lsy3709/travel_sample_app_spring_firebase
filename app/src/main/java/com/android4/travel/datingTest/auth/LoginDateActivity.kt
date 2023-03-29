@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.android4.travel.MainActivity
 import com.android4.travel.R
+import com.android4.travel.datingTest.MainDateActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -38,7 +39,7 @@ class LoginDateActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
 
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, MainDateActivity::class.java)
                         startActivity(intent)
 
                     } else {

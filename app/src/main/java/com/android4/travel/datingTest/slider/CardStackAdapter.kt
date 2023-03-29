@@ -1,4 +1,4 @@
-package com.example.date_test.slider
+package com.android4.travel.datingTest.slider
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class CardStackAdapter(val context : Context, val items : List<UserDataModel>) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardStackAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         //기본 문법
         val inflater = LayoutInflater.from(parent.context)
@@ -28,7 +28,7 @@ class CardStackAdapter(val context : Context, val items : List<UserDataModel>) :
     }
 
     //데이터 넣는 부분
-    override fun onBindViewHolder(holder: CardStackAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding(items[position])
     }
 
