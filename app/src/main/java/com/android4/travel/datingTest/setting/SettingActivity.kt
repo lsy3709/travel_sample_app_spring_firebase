@@ -80,7 +80,7 @@ class SettingActivity : AppCompatActivity() {
             auth.signOut()
 
             // 인트로 액티비티로 이동하는 부분.
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, FireBaseFcmFragment::class.java)
             startActivity(intent)
 
         }

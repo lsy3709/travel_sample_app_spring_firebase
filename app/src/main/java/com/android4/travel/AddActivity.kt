@@ -66,6 +66,11 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
+//    override fun onStart() {
+//        super.onStart()
+//
+//    }
+
     //비디오
     val requestVideoLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult())
@@ -153,7 +158,10 @@ class AddActivity : AppCompatActivity() {
 
         MyApplication.db.collection("news")
             .add(data)
-       goToMain()
+        finish()
+        onStart()
+
+       //goToMain()
 
     }
 
@@ -175,7 +183,9 @@ class AddActivity : AppCompatActivity() {
             .addOnFailureListener{
                 Log.d("lsy", "data save error", it)
             }
-        goToMain()
+        finish()
+        onStart()
+        //goToMain()
     }
 
     private fun saveStoreNoVideo(){
@@ -194,7 +204,9 @@ class AddActivity : AppCompatActivity() {
             .addOnFailureListener{
                 Log.d("lsy", "data save error", it)
             }
-        goToMain()
+        finish()
+        onStart()
+        //goToMain()
 
     }
 
